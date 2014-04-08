@@ -4,12 +4,6 @@
 #include <QMainWindow>
 #include "bussimulator.h"
 #include <QtGui>
-#include <QLabel>
-#include <QPushButton>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QLineEdit>
-#include <QScrollArea>
 
 class Bus;
 class BusStop;
