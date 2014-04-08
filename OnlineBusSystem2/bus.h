@@ -1,10 +1,11 @@
 #ifndef BUS_H
 #define BUS_H
-
+#include<QtGui>
 class Bus
 {
 public:
-    Bus(int id);
+    Bus();
+    void initialize(int id);
 
     //getter methods
     QString getRoute();

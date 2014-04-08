@@ -1,8 +1,11 @@
 #include "bus.h"
-
+#include <QtGui>
 //constructor
-Bus::Bus(int id)
+Bus::Bus()
 {
+}
+
+void Bus::initialize(int id){
     route="None";
     this->busID=id;
     occupancy=0;
@@ -16,7 +19,7 @@ QString Bus::getRoute(){
 }
 
 int Bus::getID(){
-    return id;
+    return busID;
 }
 
 int Bus::getOccupancy(){

@@ -2,6 +2,11 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "bussimulator.h"
+
+class Bus;
+class BusStop;
+class BusSimulator;
 
 class MainWindow : public QMainWindow
 {

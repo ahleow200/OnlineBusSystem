@@ -1,10 +1,13 @@
 #ifndef BUSSTOP_H
 #define BUSSTOP_H
+#include <QVector>
+#include <QtGui>
 
 class BusStop
 {
 public:
-    BusStop(const QString &name);
+    BusStop();
+    void initialize(const QString &name);
 
     //getter methods
     QString getName();
@@ -12,11 +15,13 @@ public:
 
     //setter methods
     void addToCrowd(int people);
+    void addService(const QString &route);
 
 private:
     //variables
     QString name;
     int crowdedness;
+    QVector<QString> service;
 };
 
 #endif // BUSSTOP_H
