@@ -28,3 +28,24 @@ void MainWindow::createTitleBar()
 
     setMenuWidget(window);
 }
+
+void MainWindow::createBusStopList()
+{
+    /*
+    QLineEdit *searchBar;
+    QPushButton *searchButton;
+    QVBoxLayout *busStopListLayout;
+    QHBoxLayout *busStopObject;
+    QScrollArea *busStopListScroll;
+    QPushButton *busStopButton;
+    QLabel *busIcon;
+
+    searchBar = new QLineEdit();
+    searchButton = new QPushButton("Search");
+    */
+}
+
+void MainWindow::createBusTimePanel()
+{
+
+}

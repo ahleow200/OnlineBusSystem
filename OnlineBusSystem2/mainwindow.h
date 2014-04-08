@@ -6,6 +6,9 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QLineEdit>
+#include <QScrollArea>
 
 class MainWindow : public QMainWindow
 {
@@ -17,11 +20,25 @@ public:
 
 private:
     void createTitleBar();
+    void createBusStopList();
+    void createBusTimePanel();
 
+    //title panel
     QLabel *leftTitle;
     QLabel *middleTitle;
     QPushButton *loginButton;
     QHBoxLayout *titleLayout;
+
+    /*
+    //bus stop list panel
+    QLineEdit *searchBar;
+    QPushButton *searchButton;
+    QVBoxLayout *busStopListLayout;
+    QHBoxLayout *busStopObject;
+    QScrollArea *busStopListScroll;
+    QPushButton *busStopButton;
+    QLabel *busIcon;
+    */
 
 };
 
