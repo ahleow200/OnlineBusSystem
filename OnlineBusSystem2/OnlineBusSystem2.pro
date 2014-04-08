@@ -7,7 +7,6 @@ TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 
-<<<<<<< HEAD
 # Input
 HEADERS += bus.h bussimulator.h busstop.h mainwindow.h
 SOURCES += bus.cpp \
@@ -15,10 +14,3 @@ SOURCES += bus.cpp \
            busstop.cpp \
            main.cpp \
            mainwindow.cpp
-=======
-
-SOURCES += main.cpp\
-        mainwindow.cpp \
-
-HEADERS  += mainwindow.h \
->>>>>>> cb39c215f8b83193498997882c9ad548ddc27918
