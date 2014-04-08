@@ -79,7 +79,7 @@
       <widget class="QLineEdit" name="lineEdit"/>
      </item>
      <item>
-      <widget class="QListWidget" name="BusStopList"/>
+      <widget class="BusStopList" name="busstoplist"/>
      </item>
      <item>
       <widget class="QListWidget" name="BusTimePanel"/>
@@ -126,6 +126,13 @@
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>BusStopList</class>
+   <extends>QListWidget</extends>
+   <header location="global">busstoplist.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

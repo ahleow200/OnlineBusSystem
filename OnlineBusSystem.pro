@@ -13,8 +13,16 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    busstoplist.cpp \
+    bus.cpp \
+    busstop.cpp \
+    bussimulator.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    busstoplist.h \
+    bus.h \
+    busstop.h \
+    bussimulator.h
 
 FORMS    += mainwindow.ui
