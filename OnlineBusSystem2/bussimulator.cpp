@@ -1,4 +1,11 @@
 #include "bussimulator.h"
+#include "bus.h"
+#include "busstop.h"
+#include <QtGui>
+
+class Bus;
+class BusStop;
+class BusSimulator;
 
 BusSimulator::BusSimulator()
 {
@@ -10,51 +17,88 @@ void BusSimulator::initialize()
     //initialize bus
     for(int i=0;i<26;i++)
     {
-        bus[i]=new Bus(i);
+        //bus[i]=new Bus();
+        bus[i].initialize(i);
     }
 
     //initialize bus stop
-    busstop[0]=new BusStop("PGP Terminal");
-    busstop[1]=new BusStop("After Science Park Drive");
-    busstop[2]=new BusStop("KR MRT Station");
-    busstop[3]=new BusStop("NUH");
-    busstop[4]=new BusStop("LT29");
-    busstop[5]=new BusStop("University Hall");
-    busstop[6]=new BusStop("Opp University Health Centre");
-    busstop[7]=new BusStop("Yushof Ishak House");
-    busstop[8]=new BusStop("Central Library");
-    busstop[9]=new BusStop("LT13");
-    busstop[10]=new BusStop("AS7");
-    busstop[11]=new BusStop("COM2");
-    busstop[12]=new BusStop("BIZ2");
-    busstop[13]=new BusStop("Opp House 12");
-    busstop[14]=new BusStop("House 7");
-    busstop[15]=new BusStop("Between House 14 & 15");
-    busstop[16]=new BusStop("House 12");
-    busstop[17]=new BusStop("Opp Hon Sui Sen Memorial Library");
-    busstop[18]=new BusStop("Temasek Hall");
-    busstop[19]=new BusStop("Eusoff Hall");
-    busstop[20]=new BusStop("Ventus");
-    busstop[21]=new BusStop("Computer Centre");
-    busstop[22]=new BusStop("Opp Yushof Ishak House");
-    busstop[23]=new BusStop("Museum");
-    busstop[24]=new BusStop("University Health Centre");
-    busstop[25]=new BusStop("Opp University Hall");
-    busstop[26]=new BusStop("Block S17");
-    busstop[27]=new BusStop("Opp NUH");
-    busstop[28]=new BusStop("Opp KR MRT Station");
-    busstop[29]=new BusStop("The Japanese Primary School");
-    busstop[30]=new BusStop("Block E3A");
-    busstop[31]=new BusStop("Raffles Hall");
-    busstop[32]=new BusStop("Opp Block EA");
-    busstop[33]=new BusStop("University Town");
-    busstop[34]=new BusStop("Kent Ridge Crescent");
+    //busstop[0]=new BusStop();
+    busstop[0].initialize("PGP Terminal");
+    //busstop[1]=new BusStop();
+    busstop[1].initialize("After Science Park Drive");
+    //busstop[2]=new BusStop();
+    busstop[2].initialize("KR MRT Station");
+    //busstop[3]=new BusStop();
+    busstop[3].initialize("NUH");
+    //busstop[4]=new BusStop();
+    busstop[4].initialize("LT29");
+    //busstop[5]=new BusStop();
+    busstop[5].initialize("University Hall");
+    //busstop[6]=new BusStop();
+    busstop[6].initialize("Opp University Health Centre");
+    //busstop[7]=new BusStop();
+    busstop[7].initialize("Yushof Ishak House");
+    //busstop[8]=new BusStop();
+    busstop[8].initialize("Central Library");
+    //busstop[9]=new BusStop();
+    busstop[9].initialize("LT13");
+    //busstop[10]=new BusStop();
+    busstop[10].initialize("AS7");
+    //busstop[11]=new BusStop();
+    busstop[11].initialize("COM2");
+    //busstop[12]=new BusStop();
+    busstop[12].initialize("BIZ2");
+    //busstop[13]=new BusStop();
+    busstop[13].initialize("Opp House 12");
+    //busstop[14]=new BusStop();
+    busstop[14].initialize("House 7");
+    //busstop[15]=new BusStop();
+    busstop[15].initialize("Between House 14 & 15");
+    //busstop[16]=new BusStop();
+    busstop[16].initialize("House 12");
+    //busstop[17]=new BusStop();
+    busstop[17].initialize("Opp Hon Sui Sen Memorial Library");
+    //busstop[18]=new BusStop();
+    busstop[18].initialize("Temasek Hall");
+    //busstop[19]=new BusStop();
+    busstop[19].initialize("Eusoff Hall");
+    //busstop[20]=new BusStop();
+    busstop[20].initialize("Ventus");
+    //busstop[21]=new BusStop();
+    busstop[21].initialize("Computer Centre");
+    //busstop[22]=new BusStop();
+    busstop[22].initialize("Opp Yushof Ishak House");
+    //busstop[23]=new BusStop();
+    busstop[23].initialize("Museum");
+    //busstop[24]=new BusStop();
+    busstop[24].initialize("University Health Centre");
+    //busstop[25]=new BusStop();
+    busstop[25].initialize("Opp University Hall");
+    //busstop[26]=new BusStop();
+    busstop[26].initialize("Block S17");
+    //busstop[27]=new BusStop();
+    busstop[27].initialize("Opp NUH");
+    //busstop[28]=new BusStop();
+    busstop[28].initialize("Opp KR MRT Station");
+    //busstop[29]=new BusStop();
+    busstop[29].initialize("The Japanese Primary School");
+    //busstop[30]=new BusStop();
+    busstop[30].initialize("Block E3A");
+    //busstop[31]=new BusStop();
+    busstop[31].initialize("Raffles Hall");
+    //busstop[32]=new BusStop();
+    busstop[32].initialize("Opp Block EA");
+    //busstop[33]=new BusStop();
+    busstop[33].initialize("University Town");
+    //busstop[34]=new BusStop();
+    busstop[34].initialize("Kent Ridge Crescent");
 
     //initialize A1 Route
     for(int i=0;i<16;i++)
     {
         A1Route[i]=busstop[i];
     }
+    A1Route[16]=busstop[0];
 
     //initialize A2 Route
     A2Route[0]=busstop[0];
@@ -136,6 +180,21 @@ void BusSimulator::initialize()
     D2Route[9]=busstop[26];
     D2Route[10]=busstop[28];
     D2Route[11]=busstop[0];
+
+    //initialize position of all bus to -1
+    for(int i=0;i<17;i++){
+        A1Position[i]=-1;
+        A2Position[i]=-1;
+        if(i<16)
+            BPosition[i]=-1;
+        if(i<12)
+        {
+            CPosition[i]=-1;
+            D2Position[i]=-1;
+        }
+        if(i<14)
+            D1Position[i]=-1;
+    }
 }
 
 BusStop* BusSimulator::getRoute(const QString &route)

@@ -1,6 +1,12 @@
 #include "busstop.h"
+#include <QVector>
+#include <QtGui>
 
-BusStop::BusStop(const QString &name)
+BusStop::BusStop()
+{
+}
+
+void BusStop::initialize(const QString &name)
 {
     this->name=name;
     crowdedness=0;
@@ -16,4 +22,8 @@ int BusStop::getCrowdedness(){
 
 void BusStop::addToCrowd(int people){
     crowdedness+=people;
+}
+
+void BusStop::addService(const QString &route){
+    service.push_back(route);
 }

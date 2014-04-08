@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "bussimulator.h"
 #include <QtGui>
 #include <QLabel>
 #include <QPushButton>
@@ -9,6 +10,10 @@
 #include <QVBoxLayout>
 #include <QLineEdit>
 #include <QScrollArea>
+
+class Bus;
+class BusStop;
+class BusSimulator;
 
 class MainWindow : public QMainWindow
 {
