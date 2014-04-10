@@ -12,6 +12,7 @@ public:
     //getter methods
     QString getName();
     int getCrowdedness();
+    QVector<QString> getService();
 
     //setter methods
     void addToCrowd(int people);

@@ -25,5 +25,11 @@ void BusStop::addToCrowd(int people){
 }
 
 void BusStop::addService(const QString &route){
-    service.push_back(route);
+    service.append(route);
+    //qDebug()<<"this bus stop now has"<<service.count()<<" bus services";
+}
+
+QVector<QString> BusStop::getService()
+{
+    return service;
 }
