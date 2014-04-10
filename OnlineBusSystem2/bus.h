@@ -11,6 +11,7 @@ public:
     QString getRoute();
     int getID();
     int getOccupancy();
+    int getOccupancyLimit();
     bool isDispatched();
 
     //setter methods
@@ -22,6 +23,7 @@ private:
     QString route;
     int busID;
     int occupancy;
+    int occupancyLimit;
     bool dispatchStatus;
 };
 

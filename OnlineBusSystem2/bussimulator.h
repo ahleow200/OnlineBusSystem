@@ -14,19 +14,22 @@ public:
     void initialize();
     int getCrowdedness(const QString &busstopname);
     QString* getRoute(const QString &route);
-    BusStop getBusStop(const QString &route, int order);
-    void dispatchBus(const QString &route);
+    QVector<QString> getService(const QString &busstopname);
+    //BusStop getBusStop(const QString &route, int order);
     QVector<int> getTiming(const QString &busstopname, bool nextBus);
     QVector<int> getOccupancy(const QString &busstopname);
-    int getStartIndex(const QString &route, const QString &busstopname);
-    int calculateTime(const QString &route, int startIndex, bool nextBus);
-    QVector<QString> getService(const QString &busstopname);
+    QVector<int> getOccupancyLimit(const QString &busstopname);
+
+
+    //simulation methods
+    QString dispatchBus(const QString &route);
+    void advanceAllBus();
 
 private:
     //variables
     Bus bus[26]; //total number of bus to be simulated
     BusStop busstop[35]; //total number of bus stop to be simulated
-    BusStop *A1Route[17];
+    BusStop *A1Route[16];
     BusStop *A2Route[17];
     BusStop *BRoute[16];
     BusStop *CRoute[12];
@@ -47,13 +50,6 @@ private:
     int D1Position[14];
     int D2Position[12];
 
-    int nextA1Position[17];
-    int nextA2Position[17];
-    int nextBPosition[16];
-    int nextCPosition[12];
-    int nextD1Position[14];
-    int nextD2Position[12];
-
     int A1ID;
     int A2ID;
     int BID;
@@ -61,8 +57,20 @@ private:
     int D1ID;
     int D2ID;
 
+    int currentA1;
+    int currentA2;
+    int currentB;
+    int currentC;
+    int currentD1;
+    int currentD2;
+
     int getBusStopIndex(const QString &busstopname);
     int getBusOccupancy(int busID);
+    int getStartIndex(const QString &route, const QString &busstopname);
+    int calculateTime(const QString &route, int startIndex, bool nextBus);
+    int getAvailableBus();
+    void advanceBus(const QString &route);
+    int findBusPosition(const QString &route);
 
 };
 

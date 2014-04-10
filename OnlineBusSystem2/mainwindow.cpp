@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     QString *cbusstop=bs->getRoute("C");
     QString *d2busstop=bs->getRoute("D2");
     qDebug()<<"A1 Bus Stops============================";
-    for(int i=0;i<17;i++)
+    for(int i=0;i<16;i++)
     {
         qDebug()<<a1busstop[i];
     }
@@ -34,15 +34,84 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     //testing for timing calculation
+    qDebug()<<"get upcoming bus timing";
     QVector<int> time=bs->getTiming("LT29", false);
+    qDebug()<<"get next bus timing";
     QVector<int> nextTime= bs->getTiming("LT29",true);
     QVector<int> occupancy= bs->getOccupancy("LT29");
+    QVector<int> occupancyLimit= bs->getOccupancyLimit("LT29");
     QVector<QString> service=bs->getService("LT29");
     qDebug()<<service.count();
     qDebug()<<"LT29 crowdedness:"<<bs->getCrowdedness("LT29");
     for(int i=0;i<service.count();i++)
     {
-        qDebug()<<service[i]<<" occupancy:"<<occupancy[i]<<" next bus:"<<time[i]<<" "<<nextTime[i];
+        qDebug()<<service[i]<<" occupancy:"<<occupancy[i]<<"/"<<occupancyLimit[i]<<" next bus:"<<time[i]<<" "<<nextTime[i];
+    }
+
+    time=bs->getTiming("House 7", false);
+    qDebug()<<"Timing calculated";
+    nextTime=bs->getTiming("House 7",true);
+    occupancy= bs->getOccupancy("House 7");
+    occupancyLimit=bs->getOccupancyLimit("House 7");
+    qDebug()<<"House 7"<<bs->getCrowdedness("House 7");
+    service=bs->getService("House 7");
+    for(int i=0;i<service.count();i++)
+    {
+        qDebug()<<service[i]<<" occupancy:"<<occupancy[i]<<"/"<<occupancyLimit[i]<<" next bus:"<<time[i]<<" "<<nextTime[i];
+    }
+
+    bs->advanceAllBus();
+    bs->dispatchBus("C");
+    qDebug()<<"After buses advanced---------------------------------";
+    time=bs->getTiming("LT29", false);
+    qDebug()<<"Timing calculated";
+    nextTime=bs->getTiming("LT29",true);
+    occupancy= bs->getOccupancy("LT29");
+    occupancyLimit=bs->getOccupancyLimit("LT29");
+    qDebug()<<"LT29 crowdedness:"<<bs->getCrowdedness("LT29");
+    for(int i=0;i<service.count();i++)
+    {
+        qDebug()<<service[i]<<" occupancy:"<<occupancy[i]<<"/"<<occupancyLimit[i]<<" next bus:"<<time[i]<<" "<<nextTime[i];
+    }
+
+    time=bs->getTiming("House 7", false);
+    qDebug()<<"Timing calculated";
+    nextTime=bs->getTiming("House 7",true);
+    occupancy= bs->getOccupancy("House 7");
+    occupancyLimit=bs->getOccupancyLimit("House 7");
+    qDebug()<<"House 7"<<bs->getCrowdedness("House 7");
+    service=bs->getService("House 7");
+    for(int i=0;i<service.count();i++)
+    {
+        qDebug()<<service[i]<<" occupancy:"<<occupancy[i]<<"/"<<occupancyLimit[i]<<" next bus:"<<time[i]<<" "<<nextTime[i];
+    }
+
+    bs->advanceAllBus();
+    qDebug()<<"After buses advanced 2nd time---------------------------------";
+    time=bs->getTiming("House 7", false);
+    qDebug()<<"Timing calculated";
+    nextTime=bs->getTiming("House 7",true);
+    occupancy= bs->getOccupancy("House 7");
+    occupancyLimit=bs->getOccupancyLimit("House 7");
+    qDebug()<<"House 7"<<bs->getCrowdedness("House 7");
+    service=bs->getService("House 7");
+    for(int i=0;i<service.count();i++)
+    {
+        qDebug()<<service[i]<<" occupancy:"<<occupancy[i]<<"/"<<occupancyLimit[i]<<" next bus:"<<time[i]<<" "<<nextTime[i];
+    }
+
+    bs->dispatchBus("A1");
+    qDebug()<<"After A1 bus is dispatched---------------------------------";
+    time=bs->getTiming("House 7", false);
+    qDebug()<<"Timing calculated";
+    nextTime=bs->getTiming("House 7",true);
+    occupancy= bs->getOccupancy("House 7");
+    occupancyLimit=bs->getOccupancyLimit("House 7");
+    qDebug()<<"House 7"<<bs->getCrowdedness("House 7");
+    service=bs->getService("House 7");
+    for(int i=0;i<service.count();i++)
+    {
+        qDebug()<<service[i]<<" occupancy:"<<occupancy[i]<<"/"<<occupancyLimit[i]<<" next bus:"<<time[i]<<" "<<nextTime[i];
     }
 }
 

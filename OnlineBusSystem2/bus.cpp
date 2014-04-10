@@ -9,6 +9,7 @@ void Bus::initialize(int id){
     route="None";
     this->busID=id;
     occupancy=0;
+    occupancyLimit=60;
     dispatchStatus=false;
 }
 
@@ -24,6 +25,10 @@ int Bus::getID(){
 
 int Bus::getOccupancy(){
     return occupancy;
+}
+
+int Bus::getOccupancyLimit(){
+    return occupancyLimit;
 }
 
 bool Bus::isDispatched(){
