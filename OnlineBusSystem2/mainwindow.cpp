@@ -9,6 +9,8 @@ class BusStop;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    createTitleBar();
+
     BusSimulator *bs=new BusSimulator();
 
     //testing for printing all bus stops for a bus route
