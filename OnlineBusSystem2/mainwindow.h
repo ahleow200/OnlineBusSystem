@@ -1,7 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
 #include "bussimulator.h"
 #include <QtGui>
 
@@ -28,16 +27,17 @@ private:
     QPushButton *loginButton;
     QHBoxLayout *titleLayout;
 
-    /*
+
     //bus stop list panel
     QLineEdit *searchBar;
     QPushButton *searchButton;
     QVBoxLayout *busStopListLayout;
+    QHBoxLayout *busStopSearchColumn;
     QHBoxLayout *busStopObject;
     QScrollArea *busStopListScroll;
     QPushButton *busStopButton;
     QLabel *busIcon;
-    */
+
 
 };
 

@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     createTitleBar();
+    createBusStopList();
 
     BusSimulator *bs=new BusSimulator();
 
@@ -134,7 +135,7 @@ void MainWindow::createTitleBar()
     titleLayout->addWidget(middleTitle);
     titleLayout->addWidget(loginButton);
 
-    QWidget *window = new QWidget();
+    window = new QWidget();
     window->setLayout(titleLayout);
 
     setMenuWidget(window);
@@ -142,18 +143,27 @@ void MainWindow::createTitleBar()
 
 void MainWindow::createBusStopList()
 {
-    /*
-    QLineEdit *searchBar;
-    QPushButton *searchButton;
-    QVBoxLayout *busStopListLayout;
-    QHBoxLayout *busStopObject;
-    QScrollArea *busStopListScroll;
-    QPushButton *busStopButton;
-    QLabel *busIcon;
-
     searchBar = new QLineEdit();
     searchButton = new QPushButton("Search");
-    */
+    busStopButton = new QPushButton("Science"); //test
+    busIcon = new QLabel("bus"); //test
+
+
+    busStopSearchColumn->addWidget(searchBar);
+    busStopSearchColumn->addWidget(searchButton);
+
+    busStopObject->addWidget(busStopButton);
+    busStopObject->addWidget(busIcon);
+
+    busStopListScroll->setWidget(busStopObject);
+
+    busStopListLayout->addWidget(busStopSearchColumn);
+    busStopListLayout->addWidget(busStopObject);
+
+    window = new QWidget();
+    window->setLayout(busStopListLayout);
+
+    setCentralWidget(window);
 }
 
 void MainWindow::createBusTimePanel()
