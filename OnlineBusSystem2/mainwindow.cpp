@@ -135,7 +135,7 @@ void MainWindow::createTitleBar()
     titleLayout->addWidget(middleTitle);
     titleLayout->addWidget(loginButton);
 
-    window = new QWidget();
+    QWidget *window = new QWidget();
     window->setLayout(titleLayout);
 
     setMenuWidget(window);
@@ -148,14 +148,14 @@ void MainWindow::createBusStopList()
     busStopButton = new QPushButton("Science"); //test
     busIcon = new QLabel("bus"); //test
 
-
+/*
     busStopSearchColumn->addWidget(searchBar);
     busStopSearchColumn->addWidget(searchButton);
 
     busStopObject->addWidget(busStopButton);
     busStopObject->addWidget(busIcon);
 
-    busStopListScroll->setWidget(busStopObject);
+    busStopListScroll->addWidget(busStopObject);
 
     busStopListLayout->addWidget(busStopSearchColumn);
     busStopListLayout->addWidget(busStopObject);
@@ -164,6 +164,7 @@ void MainWindow::createBusStopList()
     window->setLayout(busStopListLayout);
 
     setCentralWidget(window);
+    */
 }
 
 void MainWindow::createBusTimePanel()
