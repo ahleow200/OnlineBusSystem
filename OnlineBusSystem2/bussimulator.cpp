@@ -15,7 +15,7 @@ BusSimulator::BusSimulator()
 void BusSimulator::initialize()
 {
     //initialize bus
-    for(int i=0;i<26;i++)
+    for(int i=0;i<BusCount;i++)
     {
         //bus[i]=new Bus();
         bus[i].initialize(i);
@@ -73,13 +73,13 @@ void BusSimulator::initialize()
     busstop[34].initialize("Kent Ridge Crescent");
 
     //initialize A1 Route
-    for(int i=0;i<15;i++)
+    for(int i=0;i<A1BusStopCount-1;i++)
     {
         A1Route[i]=&busstop[i];
         A1BusStop[i]=busstop[i].getName();
     }
-    A1Route[15]=&busstop[0];
-    A1BusStop[15]=busstop[0].getName();
+    A1Route[A1BusStopCount-1]=&busstop[0];
+    A1BusStop[A1BusStopCount-1]=busstop[0].getName();
 
     //initialize A2 Route
     A2Route[0]=&busstop[0];
@@ -240,19 +240,19 @@ void BusSimulator::initialize()
     D2BusStop[11]=busstop[0].getName();
 
     //initialize position of all bus to -1
-    for(int i=0;i<17;i++){
+    for(int i=0;i<A2BusStopCount;i++){
         A2Position[i]=-1;
-        if(i<16)
+        if(i<A1BusStopCount)
         {
             A1Position[i]=-1;
             BPosition[i]=-1;
         }
-        if(i<12)
+        if(i<CBusStopCount)
         {
             CPosition[i]=-1;
             D2Position[i]=-1;
         }
-        if(i<14)
+        if(i<D1BusStopCount)
         {
             D1Position[i]=-1;
         }
@@ -272,22 +272,22 @@ void BusSimulator::initialize()
 
     //qDebug()<<"Before initialization of service";
     //initialize service for bus stops
-    for(int i=0;i<16;i++){
+    for(int i=0;i<A1BusStopCount;i++){
         A1Route[i]->addService("A1");
     }
-    for(int i=0;i<17;i++){
+    for(int i=0;i<A2BusStopCount;i++){
         A2Route[i]->addService("A2");
     }
-    for(int i=0;i<16;i++){
+    for(int i=0;i<BBusStopCount;i++){
         BRoute[i]->addService("B");
     }
-    for(int i=0;i<12;i++){
+    for(int i=0;i<CBusStopCount;i++){
         CRoute[i]->addService("C");
     }
-    for(int i=0;i<14;i++){
+    for(int i=0;i<D1BusStopCount;i++){
         D1Route[i]->addService("D1");
     }
-    for(int i=0;i<12;i++){
+    for(int i=0;i<D2BusStopCount;i++){
         D2Route[i]->addService("D2");
     }
 }
@@ -327,7 +327,7 @@ int BusSimulator::getBusStopIndex(const QString &busstopname)
 {
     int busstopindex=-1;
     //find the bus stop
-    for(int i=0;i<34;i++)
+    for(int i=0;i<BusStopCount;i++)
     {
         if(busstop[i].getName()==busstopname)
         {
@@ -428,7 +428,7 @@ int BusSimulator::getStartIndex(const QString &route, const QString &busstopname
     //find the bus stop we want to view the timing in
     if(route=="A1")
     {
-        for(int i=0;i<16;i++)
+        for(int i=0;i<A1BusStopCount;i++)
         {
             if(A1BusStop[i]==busstopname)
                 return i;
@@ -436,7 +436,7 @@ int BusSimulator::getStartIndex(const QString &route, const QString &busstopname
     }
     else if(route=="A2")
     {
-        for(int i=0;i<17;i++)
+        for(int i=0;i<A2BusStopCount;i++)
         {
             if(A2BusStop[i]==busstopname)
                 return i;
@@ -444,7 +444,7 @@ int BusSimulator::getStartIndex(const QString &route, const QString &busstopname
     }
     else if(route=="B")
     {
-        for(int i=0;i<16;i++)
+        for(int i=0;i<BBusStopCount;i++)
         {
             if(BBusStop[i]==busstopname)
                 return i;
@@ -452,7 +452,7 @@ int BusSimulator::getStartIndex(const QString &route, const QString &busstopname
     }
     else if(route=="C")
     {
-        for(int i=0;i<12;i++)
+        for(int i=0;i<CBusStopCount;i++)
         {
             if(CBusStop[i]==busstopname)
                 return i;
@@ -460,7 +460,7 @@ int BusSimulator::getStartIndex(const QString &route, const QString &busstopname
     }
     else if(route=="D1")
     {
-        for(int i=0;i<14;i++)
+        for(int i=0;i<D1BusStopCount;i++)
         {
             if(D1BusStop[i]==busstopname)
                 return i;
@@ -468,7 +468,7 @@ int BusSimulator::getStartIndex(const QString &route, const QString &busstopname
     }
     else if(route=="D2")
     {
-        for(int i=0;i<12;i++)
+        for(int i=0;i<D2BusStopCount;i++)
         {
             if(D2BusStop[i]==busstopname)
                 return i;
@@ -647,7 +647,7 @@ int BusSimulator::calculateTime(const QString &route, int startIndex, bool nextB
 
 int BusSimulator::getAvailableBus(){
     //find an available bus
-    for(int i=0;i<26;i++)
+    for(int i=0;i<BusCount;i++)
     {
         if(bus[i].isDispatched()==false)
         {
@@ -735,13 +735,13 @@ void BusSimulator::advanceBus(const QString &route)
 
     if(route=="A1")
     {
-        for(int i=14;i>-1;i--)
+        for(int i=A1BusStopCount-2;i>-1;i--)
         {
             //if found a bus on route, advance its position
             if(A1Position[i]!=-1)
             {
                 //if found a bus ending its route, terminate its service
-                if(i+1==15)
+                if(i+1==A1BusStopCount-1)
                 {
                     bus[A1Position[i]].setDispatchStatus("A1",false);
                     A1Position[i]=-1;
@@ -766,13 +766,13 @@ void BusSimulator::advanceBus(const QString &route)
     }
     else if(route=="A2")
     {
-        for(int i=15;i>-1;i--)
+        for(int i=A2BusStopCount-2;i>-1;i--)
         {
             //if found a bus on route, advance its position
             if(A2Position[i]!=-1)
             {
                 //if found a bus ending its route, terminate its service
-                if(i+1==16)
+                if(i+1==A2BusStopCount-1)
                 {
                     bus[A2Position[i]].setDispatchStatus("A2",false);
                     A2Position[i]=-1;
@@ -795,13 +795,13 @@ void BusSimulator::advanceBus(const QString &route)
     }
     else if(route=="B")
     {
-        for(int i=14;i>-1;i--)
+        for(int i=BBusStopCount-2;i>-1;i--)
         {
             //if found a bus on route, advance its position
             if(BPosition[i]!=-1)
             {
                 //if found a bus ending its route, terminate its service
-                if(i+1==15)
+                if(i+1==BBusStopCount-1)
                 {
                     bus[BPosition[i]].setDispatchStatus("B",false);
                     BPosition[i]=-1;
@@ -825,13 +825,13 @@ void BusSimulator::advanceBus(const QString &route)
     }
     else if(route=="C")
     {
-        for(int i=10;i>-1;i--)
+        for(int i=CBusStopCount-2;i>-1;i--)
         {
             //if found a bus on route, advance its position
             if(CPosition[i]!=-1)
             {
                 //if found a bus ending its route, terminate its service
-                if(i+1==11)
+                if(i+1==CBusStopCount-1)
                 {
                     bus[CPosition[i]].setDispatchStatus("C",false);
                     CPosition[i]=-1;
@@ -855,13 +855,13 @@ void BusSimulator::advanceBus(const QString &route)
     }
     else if(route=="D1")
     {
-        for(int i=12;i>-1;i--)
+        for(int i=D1BusStopCount-2;i>-1;i--)
         {
             //if found a bus on route, advance its position
             if(D1Position[i]!=-1)
             {
                 //if found a bus ending its route, terminate its service
-                if(i+1==13)
+                if(i+1==D1BusStopCount-1)
                 {
                     bus[D1Position[i]].setDispatchStatus("D1",false);
                     D1Position[i]=-1;
@@ -885,13 +885,13 @@ void BusSimulator::advanceBus(const QString &route)
     }
     else if(route=="D2")
     {
-        for(int i=10;i>-1;i--)
+        for(int i=D2BusStopCount-2;i>-1;i--)
         {
             //if found a bus on route, advance its position
             if(D2Position[i]!=-1)
             {
                 //if found a bus ending its route, terminate its service
-                if(i+1==11)
+                if(i+1==D2BusStopCount-1)
                 {
                     bus[D2Position[i]].setDispatchStatus("D2",false);
                     D2Position[i]=-1;
@@ -919,7 +919,7 @@ int BusSimulator::findBusPosition(const QString &route)
 {
     if(route=="A1")
     {
-        for(int i=15;i>-1;i--)
+        for(int i=A1BusStopCount-1;i>-1;i--)
         {
             if(A1Position[i]!=-1)
                 return i;
@@ -927,7 +927,7 @@ int BusSimulator::findBusPosition(const QString &route)
     }
     else if(route=="A2")
     {
-        for(int i=16;i>-1;i--)
+        for(int i=A2BusStopCount-1;i>-1;i--)
         {
             if(A2Position[i]!=-1)
                 return i;
@@ -935,7 +935,7 @@ int BusSimulator::findBusPosition(const QString &route)
     }
     else if(route=="B")
     {
-        for(int i=15;i>-1;i--)
+        for(int i=BBusStopCount-1;i>-1;i--)
         {
             if(BPosition[i]!=-1)
                 return i;
@@ -943,7 +943,7 @@ int BusSimulator::findBusPosition(const QString &route)
     }
     else if(route=="C")
     {
-        for(int i=11;i>-1;i--)
+        for(int i=CBusStopCount-1;i>-1;i--)
         {
             if(CPosition[i]!=-1)
                 return i;
@@ -951,7 +951,7 @@ int BusSimulator::findBusPosition(const QString &route)
     }
     else if(route=="D1")
     {
-        for(int i=13;i>-1;i--)
+        for(int i=D1BusStopCount-1;i>-1;i--)
         {
             if(D1Position[i]!=-1)
                 return i;
@@ -959,7 +959,7 @@ int BusSimulator::findBusPosition(const QString &route)
     }
     else if(route=="D2")
     {
-        for(int i=11;i>-1;i--)
+        for(int i=D2BusStopCount-1;i>-1;i--)
         {
             if(D2Position[i]!=-1)
                 return i;

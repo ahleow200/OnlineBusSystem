@@ -7,6 +7,15 @@
 class Bus;
 class BusStop;
 
+const int BusCount=26;
+const int BusStopCount=35;
+const int A1BusStopCount=16;
+const int A2BusStopCount=17;
+const int BBusStopCount=16;
+const int CBusStopCount=12;
+const int D1BusStopCount=14;
+const int D2BusStopCount=12;
+
 class BusSimulator
 {
 public:
@@ -27,28 +36,29 @@ public:
 
 private:
     //variables
-    Bus bus[26]; //total number of bus to be simulated
-    BusStop busstop[35]; //total number of bus stop to be simulated
-    BusStop *A1Route[16];
-    BusStop *A2Route[17];
-    BusStop *BRoute[16];
-    BusStop *CRoute[12];
-    BusStop *D1Route[14];
-    BusStop *D2Route[12];
 
-    QString A1BusStop[17];
-    QString A2BusStop[17];
-    QString BBusStop[16];
-    QString CBusStop[12];
-    QString D1BusStop[14];
-    QString D2BusStop[12];
+    Bus bus[BusCount]; //total number of bus to be simulated
+    BusStop busstop[BusStopCount]; //total number of bus stop to be simulated
+    BusStop *A1Route[A1BusStopCount];
+    BusStop *A2Route[A2BusStopCount];
+    BusStop *BRoute[BBusStopCount];
+    BusStop *CRoute[CBusStopCount];
+    BusStop *D1Route[D1BusStopCount];
+    BusStop *D2Route[D2BusStopCount];
 
-    int A1Position[17];
-    int A2Position[17];
-    int BPosition[16];
-    int CPosition[12];
-    int D1Position[14];
-    int D2Position[12];
+    QString A1BusStop[A1BusStopCount];
+    QString A2BusStop[A2BusStopCount];
+    QString BBusStop[BBusStopCount];
+    QString CBusStop[CBusStopCount];
+    QString D1BusStop[D1BusStopCount];
+    QString D2BusStop[D2BusStopCount];
+
+    int A1Position[A1BusStopCount];
+    int A2Position[A2BusStopCount];
+    int BPosition[BBusStopCount];
+    int CPosition[CBusStopCount];
+    int D1Position[D1BusStopCount];
+    int D2Position[D2BusStopCount];
 
     int A1ID;
     int A2ID;
