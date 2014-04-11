@@ -21,6 +21,8 @@ private:
     void createBusStopList();
     void createBusTimePanel();
 
+    QGridLayout *mainWindowLayout;
+
     //title panel
     QLabel *leftTitle;
     QLabel *middleTitle;
