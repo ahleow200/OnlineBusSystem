@@ -29,16 +29,36 @@ private:
     QPushButton *loginButton;
     QHBoxLayout *titleLayout;
 
-
     //bus stop list panel
     QLineEdit *searchBar;
     QPushButton *searchButton;
     QVBoxLayout *busStopListLayout;
+    QListWidget *busStopList;
     QHBoxLayout *busStopSearchColumn;
     QHBoxLayout *busStopObject;
     QScrollArea *busStopListScroll;
-    QPushButton *busStopButton;
+    QLabel *busStopLabel;
     QLabel *busIcon;
+
+    //time panel
+    QHBoxLayout *timePanel;
+    QVBoxLayout *leftPanel;
+    QVBoxLayout *estimateTime;
+
+    QHBoxLayout *occupancyBox;
+    QHBoxLayout *timeObject;
+
+    QLabel *busName;
+    QLabel *occupancyLabel;
+    QLabel *vacancyLabel;
+    QLabel *slashLabel;
+    QLabel *busSeatLabel;
+
+    QLabel *nextBusTime;
+    QLabel *nextTwoBusTime;
+    QLabel *minLabel;
+
+    //map panel
 
 
 };

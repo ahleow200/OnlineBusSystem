@@ -9,8 +9,15 @@ class BusStop;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    mainWindowLayout = new QGridLayout();
     createTitleBar();
     createBusStopList();
+    createBusTimePanel();
+
+    QWidget *window = new QWidget();
+    window->setLayout(mainWindowLayout);
+
+    setCentralWidget(window);
 
     BusSimulator *bs=new BusSimulator();
 
@@ -139,6 +146,7 @@ void MainWindow::createTitleBar()
     window->setLayout(titleLayout);
 
     setMenuWidget(window);
+
 }
 
 void MainWindow::createBusStopList()
@@ -146,32 +154,88 @@ void MainWindow::createBusStopList()
     busStopSearchColumn = new QHBoxLayout();
     busStopObject = new QHBoxLayout();
     busStopListLayout = new QVBoxLayout();
+    busStopList = new QListWidget();
 
     searchBar = new QLineEdit();
     searchButton = new QPushButton("Search");
-    busStopButton = new QPushButton("Science"); //test
+    busStopLabel = new QLabel("Science"); //test
     busIcon = new QLabel("bus"); //test
-
 
     busStopSearchColumn->addWidget(searchBar);
     busStopSearchColumn->addWidget(searchButton);
 
-    busStopObject->addWidget(busStopButton);
+    busStopObject->addWidget(busStopLabel);
     busStopObject->addWidget(busIcon);
 
     //busStopListScroll->addWidget(busStopObject);
+    /*
+    busStopList->addLayout(busStopObject);
+    busStopList->addLayout(busStopObject);
+    busStopList->addLayout(busStopObject);
+    busStopList->addLayout(busStopObject);
+    busStopList->addLayout(busStopObject);
+    */
+
+    busStopList->addItem(new QListWidgetItem("Science"));
+    busStopList->addItem(new QListWidgetItem("Science"));
+    busStopList->addItem(new QListWidgetItem("Science"));
+    busStopList->addItem(new QListWidgetItem("Science"));
+    busStopList->addItem(new QListWidgetItem("Science"));
+
+    busStopList->setItemWidget(new QListWidgetItem("Science"),busIcon);
+    //busStopList->setLayout(busStopObject);
 
     busStopListLayout->addLayout(busStopSearchColumn);
-    busStopListLayout->addLayout(busStopObject);
+    busStopListLayout->addWidget(busStopList);
 
+    mainWindowLayout->addLayout(busStopListLayout,0,0);
+
+/*
     QWidget *window = new QWidget();
     window->setLayout(busStopListLayout);
 
     setCentralWidget(window);
-
+*/
 }
 
 void MainWindow::createBusTimePanel()
-{
+{        
+    QLabel *nextBusTime;
+    QLabel *nextTwoBusTime;
+    QLabel *minLabel;
 
+    timePanel = new QHBoxLayout();
+    leftPanel = new QVBoxLayout();
+    estimateTime = new QVBoxLayout();
+    occupancyBox = new QHBoxLayout();
+    timeObject = new QHBoxLayout();
+
+    busName = new QLabel("A1");
+    occupancyLabel = new QLabel("Occupancy: ");
+    vacancyLabel = new QLabel("40");
+    slashLabel = new QLabel("/");
+    busSeatLabel = new QLabel("60");
+
+    occupancyBox->addWidget(occupancyLabel);
+    occupancyBox->addWidget(vacancyLabel);
+    occupancyBox->addWidget(slashLabel);
+    occupancyBox->addWidget(busSeatLabel);
+
+    nextBusTime = new QLabel("7");
+    //nextTwoBusTime = new QLabel("22");
+    minLabel = new QLabel("min");
+
+    timeObject->addWidget(nextBusTime);
+    timeObject->addWidget(minLabel);
+
+    leftPanel->addWidget(busName);
+    leftPanel->addLayout(occupancyBox);
+
+    estimateTime->addLayout(timeObject);
+    estimateTime->addLayout(timeObject);
+
+    timePanel->addLayout(leftPanel);
+    timePanel->addLayout(estimateTime);
+
+    mainWindowLayout->addLayout(timePanel,1,0);
 }
