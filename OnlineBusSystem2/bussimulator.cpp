@@ -259,7 +259,7 @@ void BusSimulator::initialize()
     }
 
     //simulate position for testing purpose
-    A1Position[2]=bus[0].getID();
+    /*A1Position[2]=bus[0].getID();
     A1Position[13]=bus[6].getID();
     A2Position[0]=bus[1].getID();
     BPosition[0]=bus[2].getID();
@@ -268,7 +268,7 @@ void BusSimulator::initialize()
     D2Position[0]=bus[5].getID();
     bus[0].addPassenger(30);
     bus[3].addPassenger(20);
-    bus[5].addPassenger(10);
+    bus[5].addPassenger(10);*/
 
     //qDebug()<<"Before initialization of service";
     //initialize service for bus stops
@@ -753,7 +753,7 @@ void BusSimulator::advanceBus(const QString &route)
                     //advance the bus by one stop
                     A1Position[i+1]=A1Position[i];
                     A1Position[i]=-1;
-                    qDebug()<<"A1Position[i]="<<A1Position[i+1]<<"A1Position[i-1]="<<A1Position[i];
+                    //qDebug()<<"A1Position[i]="<<A1Position[i+1]<<"A1Position[i-1]="<<A1Position[i];
                     if(currentModified==false)
                     {
                         currentA1++;
@@ -762,7 +762,7 @@ void BusSimulator::advanceBus(const QString &route)
                 }
             }
         }
-        qDebug()<<"current A1 is now= "<<currentA1<<" A1 Position= "<<A1Position[currentA1];
+        //qDebug()<<"current A1 is now= "<<currentA1<<" A1 Position= "<<A1Position[currentA1];
     }
     else if(route=="A2")
     {
@@ -967,4 +967,20 @@ int BusSimulator::findBusPosition(const QString &route)
     }
 
     return -1;
+}
+
+int* BusSimulator::getBusPosition(const QString &route)
+{
+    if(route=="A1")
+        return A1Position;
+    else if(route=="A2")
+        return A2Position;
+    else if(route=="B")
+        return BPosition;
+    else if(route=="C")
+        return CPosition;
+    else if(route=="D1")
+        return D1Position;
+    else
+        return D2Position;
 }

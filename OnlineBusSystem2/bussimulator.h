@@ -33,6 +33,7 @@ public:
     //simulation methods
     QString dispatchBus(const QString &route);
     void advanceAllBus();
+    int* getBusPosition(const QString &route);
 
 private:
     //variables

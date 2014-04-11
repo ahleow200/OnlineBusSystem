@@ -40,6 +40,14 @@ private:
     QPushButton *busStopButton;
     QLabel *busIcon;
 
+    int myTimerId;
+    BusSimulator *bs;
+    int timerCount;
+
+protected:
+    void timerEvent(QTimerEvent *event);
+    void showEvent(QShowEvent *event);
+    void hideEvent(QHideEvent *event);
 
 };
 

@@ -2,6 +2,8 @@
 #include "bussimulator.h"
 #include "busstop.h"
 #include <QtDebug>
+#include <iostream>
+#include <stdio.h>
 
 class BusSimulator;
 class BusStop;
@@ -12,7 +14,10 @@ MainWindow::MainWindow(QWidget *parent)
     createTitleBar();
     createBusStopList();
 
-    BusSimulator *bs=new BusSimulator();
+    myTimerId=0;
+    timerCount=0;
+
+    bs=new BusSimulator();
 
     //testing for printing all bus stops for a bus route
     QString *a1busstop=bs->getRoute("A1");
@@ -123,6 +128,65 @@ MainWindow::~MainWindow()
 
 }
 
+//event overwrite
+void MainWindow::showEvent(QShowEvent *event)
+{
+    myTimerId=startTimer(3000);
+}
+
+void MainWindow::hideEvent(QHideEvent *event)
+{
+    killTimer(myTimerId);
+}
+
+void MainWindow::timerEvent(QTimerEvent *event)
+{
+    if (event->timerId() == myTimerId)
+    {
+        //simulate bus system
+        //dispatch buses
+        if(timerCount>=6)
+        {
+            bs->dispatchBus("A1");
+            bs->dispatchBus("A2");
+            bs->dispatchBus("B");
+            bs->dispatchBus("C");
+            bs->dispatchBus("D1");
+            bs->dispatchBus("D2");
+            timerCount=0;
+        }
+
+        //get bus location
+        int *a1position=bs->getBusPosition("A1");
+        int *a2position=bs->getBusPosition("A2");
+        int *bposition=bs->getBusPosition("B");
+        int *cposition=bs->getBusPosition("C");
+        int *d1position=bs->getBusPosition("D1");
+        int *d2position=bs->getBusPosition("D2");
+
+        //print all bus location
+        qDebug()<<"A1=================================================";
+        qDebug()<<"0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15";
+        QString a1map;
+        for(int i=0;i<A1BusStopCount;i++)
+        {
+            if(a1position[i]!=-1)
+                a1map.append("[v] ");
+                //qDebug("[v] ");
+            else
+                a1map.append("[] ");
+                //qDebug("[] ");
+        }
+        qDebug()<<a1map;
+        bs->advanceAllBus();
+        timerCount++;
+    }
+    else
+        QWidget::timerEvent(event); // propagate
+
+}
+
+//GUI
 void MainWindow::createTitleBar()
 {
     titleLayout = new QHBoxLayout();
