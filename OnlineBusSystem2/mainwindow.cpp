@@ -15,6 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     createTitleBar();
     createBusStopList();
     createBusTimePanel();
+    createMapPanel();
 
     QWidget *window = new QWidget();
     window->setLayout(mainWindowLayout);
@@ -158,6 +159,8 @@ void MainWindow::createBusStopList()
     busStopList->addItem(new QListWidgetItem("Science"));
 
     busStopList->setItemWidget(new QListWidgetItem("Science"),busIcon);
+
+    busStopList->setFixedHeight(400);
     //busStopList->setLayout(busStopObject);
 
     busStopListLayout->addLayout(busStopSearchColumn);
@@ -184,6 +187,7 @@ void MainWindow::createBusTimePanel()
     estimateTime = new QVBoxLayout();
     occupancyBox = new QHBoxLayout();
     timeObject = new QHBoxLayout();
+    timeObject2 = new QHBoxLayout();
 
     busName = new QLabel("A1");
     occupancyLabel = new QLabel("Occupancy: ");
@@ -197,20 +201,34 @@ void MainWindow::createBusTimePanel()
     occupancyBox->addWidget(busSeatLabel);
 
     nextBusTime = new QLabel("7");
+    nextTwoBusTime = new QLabel("20");
     //nextTwoBusTime = new QLabel("22");
     minLabel = new QLabel("min");
 
     timeObject->addWidget(nextBusTime);
     timeObject->addWidget(minLabel);
 
+    timeObject2->addWidget(nextTwoBusTime);
+    timeObject2->addWidget(minLabel);
+
     leftPanel->addWidget(busName);
     leftPanel->addLayout(occupancyBox);
 
     estimateTime->addLayout(timeObject);
-    estimateTime->addLayout(timeObject);
+    estimateTime->addLayout(timeObject2);
 
     timePanel->addLayout(leftPanel);
     timePanel->addLayout(estimateTime);
 
     mainWindowLayout->addLayout(timePanel,1,0);
+}
+
+void MainWindow::createMapPanel()
+{
+    mapLabel = new QLabel("Map is here.");
+
+    mapLabel->setFixedHeight(300);
+    mapLabel->setFixedWidth(800);
+
+    mainWindowLayout->addWidget(mapLabel,0,1);
 }

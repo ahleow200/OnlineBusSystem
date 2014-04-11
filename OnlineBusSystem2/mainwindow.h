@@ -20,6 +20,7 @@ private:
     void createTitleBar();
     void createBusStopList();
     void createBusTimePanel();
+    void createMapPanel();
 
     QGridLayout *mainWindowLayout;
 
@@ -47,6 +48,7 @@ private:
 
     QHBoxLayout *occupancyBox;
     QHBoxLayout *timeObject;
+    QHBoxLayout *timeObject2;
 
     QLabel *busName;
     QLabel *occupancyLabel;
@@ -59,6 +61,7 @@ private:
     QLabel *minLabel;
 
     //map panel
+    QLabel *mapLabel;
 
 
     int myTimerId;
