@@ -14,6 +14,11 @@ BusSimulator::BusSimulator()
 
 void BusSimulator::initialize()
 {
+    // Create seed for the random
+    // That is needed only once on application startup
+    time = QTime::currentTime();
+    qsrand((uint)time.msec());
+
     //initialize bus
     for(int i=0;i<BusCount;i++)
     {
@@ -670,6 +675,7 @@ QString BusSimulator::dispatchBus(const QString &route)
     {
         bus[availableBusID].setDispatchStatus("A1",true);
         A1Position[0]=bus[availableBusID].getID();
+        boardPassenger("A1",0);
         if(findBusPosition("A1")==-1) //if there's no bus dispatched yet
             currentA1=0;
         return "Successfully dispatched an A1 bus";
@@ -678,6 +684,7 @@ QString BusSimulator::dispatchBus(const QString &route)
     {
         bus[availableBusID].setDispatchStatus("A2",true);
         A2Position[0]=bus[availableBusID].getID();
+        boardPassenger("A2",0);
         if(findBusPosition("A2")==-1) //if there's no bus dispatched yet
             currentA2=0;
         return "Successfully dispatched an A2 bus";
@@ -686,6 +693,7 @@ QString BusSimulator::dispatchBus(const QString &route)
     {
         bus[availableBusID].setDispatchStatus("B",true);
         BPosition[0]=bus[availableBusID].getID();
+        boardPassenger("B",0);
         if(findBusPosition("B")==-1) //if there's no bus dispatched yet
             currentB=0;
         return "Successfully dispatched a B bus";
@@ -694,6 +702,7 @@ QString BusSimulator::dispatchBus(const QString &route)
     {
         bus[availableBusID].setDispatchStatus("C",true);
         CPosition[0]=bus[availableBusID].getID();
+        boardPassenger("C",0);
         if(findBusPosition("C")==-1) //if there's no bus dispatched yet
             currentC=0;
         return "Successfully dispatched a C bus";
@@ -702,6 +711,7 @@ QString BusSimulator::dispatchBus(const QString &route)
     {
         bus[availableBusID].setDispatchStatus("D1",true);
         D1Position[0]=bus[availableBusID].getID();
+        boardPassenger("D1",0);
         if(findBusPosition("D1")==-1) //if there's no bus dispatched yet
             currentD1=0;
         return "Successfully dispatched a D1 bus";
@@ -710,6 +720,7 @@ QString BusSimulator::dispatchBus(const QString &route)
     {
         bus[availableBusID].setDispatchStatus("D2",true);
         D2Position[0]=bus[availableBusID].getID();
+        boardPassenger("D2",0);
         if(findBusPosition("D2")==-1) //if there's no bus dispatched yet
             currentD2=0;
         return "Successfully dispatched a D2 bus";
@@ -753,6 +764,7 @@ void BusSimulator::advanceBus(const QString &route)
                     //advance the bus by one stop
                     A1Position[i+1]=A1Position[i];
                     A1Position[i]=-1;
+                    boardPassenger("A1",i+1);
                     //qDebug()<<"A1Position[i]="<<A1Position[i+1]<<"A1Position[i-1]="<<A1Position[i];
                     if(currentModified==false)
                     {
@@ -784,6 +796,7 @@ void BusSimulator::advanceBus(const QString &route)
                     //advance the bus by one stop
                     A2Position[i+1]=A2Position[i];
                     A2Position[i]=-1;
+                    boardPassenger("A2",i+1);
                     if(currentModified==false)
                     {
                         currentA2++;
@@ -814,6 +827,7 @@ void BusSimulator::advanceBus(const QString &route)
                     //advance the bus by one stop
                     BPosition[i+1]=BPosition[i];
                     BPosition[i]=-1;
+                    boardPassenger("B",i+1);
                     if(currentModified==false)
                     {
                         currentB++;
@@ -844,6 +858,7 @@ void BusSimulator::advanceBus(const QString &route)
                     //advance the bus by one stop
                     CPosition[i+1]=CPosition[i];
                     CPosition[i]=-1;
+                    boardPassenger("C",i+1);
                     if(currentModified==false)
                     {
                         currentC++;
@@ -874,6 +889,7 @@ void BusSimulator::advanceBus(const QString &route)
                     //advance the bus by one stop
                     D1Position[i+1]=D1Position[i];
                     D1Position[i]=-1;
+                    boardPassenger("D1",i+1);
                     if(currentModified==false)
                     {
                         currentD1++;
@@ -904,6 +920,7 @@ void BusSimulator::advanceBus(const QString &route)
                     //advance the bus by one stop
                     D2Position[i+1]=D2Position[i];
                     D2Position[i]=-1;
+                    boardPassenger("D2",i+1);
                     if(currentModified==false)
                     {
                         currentD2++;
@@ -984,3 +1001,156 @@ int* BusSimulator::getBusPosition(const QString &route)
     else
         return D2Position;
 }
+
+int BusSimulator::randInt(int low, int high)
+{
+// Random number between low and high
+return qrand() % ((high + 1) - low) + low;
+}
+
+void BusSimulator::addCrowd()
+{
+    // Get random value between 0-100
+    int randomValue;
+    for(int i=0;i<BusStopCount;i++)
+    {
+        randomValue = randInt(0,2);
+        busstop[i].addToCrowd(randomValue);
+    }
+}
+
+void BusSimulator::boardPassenger(const QString &route, int index)
+{
+    int passenger;
+    int occupancy;
+    int occupancyLimit;
+    int availableSpace;
+    if(route=="A1")
+    {
+        occupancy=bus[A1Position[index]].getOccupancy();
+        occupancyLimit=bus[A1Position[index]].getOccupancyLimit();
+        //alight passengers
+        bus[A1Position[index]].subtractPassenger(randInt(0,occupancy));
+
+        //board passengers
+        if(bus[A1Position[index]].isFull()==false)
+        {
+            passenger=randInt(0,A1Route[index]->getCrowdedness());
+            availableSpace=occupancyLimit-occupancy;
+            if(passenger>availableSpace)
+                bus[A1Position[index]].addPassenger(availableSpace);
+            else
+            {
+                bus[A1Position[index]].addPassenger(passenger);
+                A1Route[index]->reduceCrowd(passenger);
+            }
+        }
+    }
+    else if(route=="A2")
+    {
+        occupancy=bus[A2Position[index]].getOccupancy();
+        occupancyLimit=bus[A2Position[index]].getOccupancyLimit();
+        //alight passengers
+        bus[A2Position[index]].subtractPassenger(randInt(0,occupancy));
+
+        //board passengers
+        if(bus[A2Position[index]].isFull()==false)
+        {
+            passenger=randInt(0,A2Route[index]->getCrowdedness());
+            availableSpace=occupancyLimit-occupancy;
+            if(passenger>availableSpace)
+                bus[A2Position[index]].addPassenger(availableSpace);
+            else
+            {
+                bus[A2Position[index]].addPassenger(passenger);
+                A2Route[index]->reduceCrowd(passenger);
+            }
+        }
+    }
+    else if(route=="B")
+    {
+        occupancy=bus[BPosition[index]].getOccupancy();
+        occupancyLimit=bus[BPosition[index]].getOccupancyLimit();
+        //alight passengers
+        bus[BPosition[index]].subtractPassenger(randInt(0,occupancy));
+
+        //board passengers
+        if(bus[BPosition[index]].isFull()==false)
+        {
+            passenger=randInt(0,BRoute[index]->getCrowdedness());
+            availableSpace=occupancyLimit-occupancy;
+            if(passenger>availableSpace)
+                bus[BPosition[index]].addPassenger(availableSpace);
+            else
+            {
+                bus[BPosition[index]].addPassenger(passenger);
+                BRoute[index]->reduceCrowd(passenger);
+            }
+        }
+    }
+    else if(route=="C")
+    {
+        occupancy=bus[CPosition[index]].getOccupancy();
+        occupancyLimit=bus[CPosition[index]].getOccupancyLimit();
+        //alight passengers
+        bus[CPosition[index]].subtractPassenger(randInt(0,occupancy));
+
+        //board passengers
+        if(bus[CPosition[index]].isFull()==false)
+        {
+            passenger=randInt(0,CRoute[index]->getCrowdedness());
+            availableSpace=occupancyLimit-occupancy;
+            if(passenger>availableSpace)
+                bus[CPosition[index]].addPassenger(availableSpace);
+            else
+            {
+                bus[CPosition[index]].addPassenger(passenger);
+                CRoute[index]->reduceCrowd(passenger);
+            }
+        }
+    }
+    else if(route=="D1")
+    {
+        occupancy=bus[D1Position[index]].getOccupancy();
+        occupancyLimit=bus[D1Position[index]].getOccupancyLimit();
+        //alight passengers
+        bus[D1Position[index]].subtractPassenger(randInt(0,occupancy));
+
+        //board passengers
+        if(bus[D1Position[index]].isFull()==false)
+        {
+            passenger=randInt(0,D1Route[index]->getCrowdedness());
+            availableSpace=occupancyLimit-occupancy;
+            if(passenger>availableSpace)
+                bus[D1Position[index]].addPassenger(availableSpace);
+            else
+            {
+                bus[D1Position[index]].addPassenger(passenger);
+                D1Route[index]->reduceCrowd(passenger);
+            }
+        }
+    }
+    else if(route=="D2")
+    {
+        occupancy=bus[D2Position[index]].getOccupancy();
+        occupancyLimit=bus[D2Position[index]].getOccupancyLimit();
+        //alight passengers
+        bus[D2Position[index]].subtractPassenger(randInt(0,occupancy));
+
+        //board passengers
+        if(bus[D2Position[index]].isFull()==false)
+        {
+            passenger=randInt(0,D2Route[index]->getCrowdedness());
+            availableSpace=occupancyLimit-occupancy;
+            if(passenger>availableSpace)
+                bus[D2Position[index]].addPassenger(availableSpace);
+            else
+            {
+                bus[D2Position[index]].addPassenger(passenger);
+                D2Route[index]->reduceCrowd(passenger);
+            }
+        }
+    }
+}
+
+

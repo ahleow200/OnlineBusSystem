@@ -16,6 +16,7 @@ public:
 
     //setter methods
     void addToCrowd(int people);
+    void reduceCrowd(int people);
     void addService(const QString &route);
 
 private:
