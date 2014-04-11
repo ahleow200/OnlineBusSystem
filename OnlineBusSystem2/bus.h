@@ -13,10 +13,12 @@ public:
     int getOccupancy();
     int getOccupancyLimit();
     bool isDispatched();
+    bool isFull();
 
     //setter methods
     bool setDispatchStatus(const QString &route, bool status);
     void addPassenger(int passenger);
+    void subtractPassenger(int passenger);
 
 private:
     //variables

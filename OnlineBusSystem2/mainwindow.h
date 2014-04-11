@@ -29,37 +29,25 @@ private:
     QPushButton *loginButton;
     QHBoxLayout *titleLayout;
 
+
     //bus stop list panel
     QLineEdit *searchBar;
     QPushButton *searchButton;
     QVBoxLayout *busStopListLayout;
-    QListWidget *busStopList;
     QHBoxLayout *busStopSearchColumn;
     QHBoxLayout *busStopObject;
     QScrollArea *busStopListScroll;
-    QLabel *busStopLabel;
+    QPushButton *busStopButton;
     QLabel *busIcon;
 
-    //time panel
-    QHBoxLayout *timePanel;
-    QVBoxLayout *leftPanel;
-    QVBoxLayout *estimateTime;
+    int myTimerId;
+    BusSimulator *bs;
+    int timerCount;
 
-    QHBoxLayout *occupancyBox;
-    QHBoxLayout *timeObject;
-
-    QLabel *busName;
-    QLabel *occupancyLabel;
-    QLabel *vacancyLabel;
-    QLabel *slashLabel;
-    QLabel *busSeatLabel;
-
-    QLabel *nextBusTime;
-    QLabel *nextTwoBusTime;
-    QLabel *minLabel;
-
-    //map panel
-
+protected:
+    void timerEvent(QTimerEvent *event);
+    void showEvent(QShowEvent *event);
+    void hideEvent(QHideEvent *event);
 
 };
 

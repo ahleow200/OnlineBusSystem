@@ -24,6 +24,10 @@ void BusStop::addToCrowd(int people){
     crowdedness+=people;
 }
 
+void BusStop::reduceCrowd(int people){
+    crowdedness-=people;
+}
+
 void BusStop::addService(const QString &route){
     if(!service.contains(route))
         service.append(route);

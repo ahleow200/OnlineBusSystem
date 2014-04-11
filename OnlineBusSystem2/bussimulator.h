@@ -33,6 +33,9 @@ public:
     //simulation methods
     QString dispatchBus(const QString &route);
     void advanceAllBus();
+    int* getBusPosition(const QString &route);
+    void addCrowd();
+    void boardPassenger(const QString &route, int index);
 
 private:
     //variables
@@ -81,6 +84,9 @@ private:
     int getAvailableBus();
     void advanceBus(const QString &route);
     int findBusPosition(const QString &route);
+    int randInt(int low, int high);
+
+    QTime time;
 
 };
 
