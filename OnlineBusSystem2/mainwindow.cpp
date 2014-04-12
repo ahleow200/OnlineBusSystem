@@ -96,6 +96,35 @@ void MainWindow::timerEvent(QTimerEvent *event)
             else
                 qDebug()<<service[i]<<" occupancy:"<<occupancy[i]<<"/"<<occupancyLimit[i]<<" next bus:"<<time[i]<<" "<<nextTime[i];
         }
+
+        //print all bus location
+        qDebug()<<"A2=================================================";
+        qDebug()<<"0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
+        QString a2map;
+        for(int i=0;i<A2BusStopCount;i++)
+        {
+            if(a2position[i]!=-1)
+                a2map.append("[v] ");
+                //qDebug("[v] ");
+            else
+                a2map.append("[] ");
+                //qDebug("[] ");
+        }
+        qDebug()<<a2map;
+        time=bs->getTiming("Opp KR MRT Station", false);
+        nextTime= bs->getTiming("Opp KR MRT Station",true);
+        occupancy= bs->getOccupancy("Opp KR MRT Station");
+        occupancyLimit=bs->getOccupancyLimit("Opp KR MRT Station");
+        service=bs->getService("Opp KR MRT Station");
+        qDebug()<<"Opp KR MRT Station crowdedness: "<<bs->getCrowdedness("Opp KR MRT Station");
+        for(int i=0;i<service.count();i++)
+        {
+            if(occupancyLimit[i]>60)
+                qDebug()<<service[i]<<" occupancy:"<<0<<"/"<<60<<" next bus:"<<time[i]<<" "<<nextTime[i];
+            else
+                qDebug()<<service[i]<<" occupancy:"<<occupancy[i]<<"/"<<occupancyLimit[i]<<" next bus:"<<time[i]<<" "<<nextTime[i];
+        }
+
         bs->advanceAllBus();
         bs->addCrowd();
         timerCount++;
