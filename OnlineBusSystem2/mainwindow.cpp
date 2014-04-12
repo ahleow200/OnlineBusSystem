@@ -254,10 +254,21 @@ void MainWindow::createBusTimePanel()
 
 void MainWindow::createMapPanel()
 {
+    QVBoxLayout *mapPanel = new QVBoxLayout();
+    QStringList buses;
+    buses << "A1" << "A2" << "D1" << "D2";
+
+    busList = new QComboBox();
+    busList->setFixedWidth(100);
+    busList->addItems(buses);
+
     mapLabel = new QLabel("Map is here.");
 
-    mapLabel->setFixedHeight(300);
+    //mapLabel->setFixedHeight(300);
     mapLabel->setFixedWidth(800);
 
-    mainWindowLayout->addWidget(mapLabel,0,1);
+    mapPanel->addWidget(busList);
+    mapPanel->addWidget(mapLabel);
+
+    mainWindowLayout->addLayout(mapPanel,0,1);
 }

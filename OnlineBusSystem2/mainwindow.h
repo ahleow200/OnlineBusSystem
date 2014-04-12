@@ -61,6 +61,7 @@ private:
     QLabel *minLabel;
 
     //map panel
+    QComboBox *busList;
     QLabel *mapLabel;
 
 
