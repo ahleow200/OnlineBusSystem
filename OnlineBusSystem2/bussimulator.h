@@ -23,7 +23,7 @@ public:
     BusSimulator();
     void initialize();
     int getCrowdedness(const QString &busstopname);
-    QString* getRoute(const QString &route);
+    BusStop** getRoute(const QString &route);
     QVector<QString> getService(const QString &busstopname);
     //BusStop getBusStop(const QString &route, int order);
     QVector<int> getTiming(const QString &busstopname, bool nextBus);

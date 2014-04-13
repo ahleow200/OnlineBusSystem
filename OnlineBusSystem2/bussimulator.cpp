@@ -312,7 +312,7 @@ QVector<QString> BusSimulator::getService(const QString &busstopname)
     return service;
 }
 
-QString* BusSimulator::getRoute(const QString &route)
+/*QString* BusSimulator::getRoute(const QString &route)
 {
     if(route=="A1")
         return A1BusStop;
@@ -326,6 +326,22 @@ QString* BusSimulator::getRoute(const QString &route)
         return D1BusStop;
     else
         return D2BusStop;
+}*/
+
+BusStop** BusSimulator::getRoute(const QString &route)
+{
+    if(route=="A1")
+        return A1Route;
+    else if(route=="A2")
+        return A2Route;
+    else if(route=="B")
+        return BRoute;
+    else if(route=="C")
+        return CRoute;
+    else if(route=="D1")
+        return D1Route;
+    else
+        return D2Route;
 }
 
 int BusSimulator::getBusStopIndex(const QString &busstopname)
