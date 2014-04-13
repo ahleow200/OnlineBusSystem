@@ -209,49 +209,8 @@ void MainWindow::createBusStopList()
 
 void MainWindow::createBusTimePanel()
 {
-    QLabel *nextBusTime;
-    QLabel *nextTwoBusTime;
-    QLabel *minLabel;
-
-    timePanel = new QHBoxLayout();
-    leftPanel = new QVBoxLayout();
-    estimateTime = new QVBoxLayout();
-    occupancyBox = new QHBoxLayout();
-    timeObject = new QHBoxLayout();
-    timeObject2 = new QHBoxLayout();
-
-    busName = new QLabel("A1");
-    occupancyLabel = new QLabel("Occupancy: ");
-    vacancyLabel = new QLabel("40");
-    slashLabel = new QLabel("/");
-    busSeatLabel = new QLabel("60");
-
-    occupancyBox->addWidget(occupancyLabel);
-    occupancyBox->addWidget(vacancyLabel);
-    occupancyBox->addWidget(slashLabel);
-    occupancyBox->addWidget(busSeatLabel);
-
-    nextBusTime = new QLabel("7");
-    nextTwoBusTime = new QLabel("20");
-    //nextTwoBusTime = new QLabel("22");
-    minLabel = new QLabel("min");
-
-    timeObject->addWidget(nextBusTime);
-    timeObject->addWidget(minLabel);
-
-    timeObject2->addWidget(nextTwoBusTime);
-    timeObject2->addWidget(minLabel);
-
-    leftPanel->addWidget(busName);
-    leftPanel->addLayout(occupancyBox);
-
-    estimateTime->addLayout(timeObject);
-    estimateTime->addLayout(timeObject2);
-
-    timePanel->addLayout(leftPanel);
-    timePanel->addLayout(estimateTime);
-
-    mainWindowLayout->addLayout(timePanel,1,0);
+    waitTimeWidget = new WaitTimeWidget();
+    mainWindowLayout->addWidget(waitTimeWidget,1,0);
 }
 
 void MainWindow::createMapPanel()
@@ -272,5 +231,8 @@ void MainWindow::createMapPanel()
     mapPanel->addWidget(busList);
     mapPanel->addWidget(mapLabel);
 
+
     mainWindowLayout->addLayout(mapPanel,0,1);
+
+    //mainWindowLayout->addWidget(waitTimeWidget,0,1);
 }
