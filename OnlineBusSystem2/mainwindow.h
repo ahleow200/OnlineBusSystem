@@ -17,6 +17,9 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void initialize(BusSimulator **bs);
+    bool updateAllowed();
+    void toggleUpdate();
 
 private:
     void createTitleBar();
@@ -44,8 +47,8 @@ private:
 
 
     int myTimerId;
-        BusSimulator *bs;
-        int timerCount;
+    BusSimulator **bs;
+    int timerCount;
 
     protected:
         void timerEvent(QTimerEvent *event);

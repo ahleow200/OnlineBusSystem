@@ -9,12 +9,12 @@ INCLUDEPATH += .
 
 # Input
 HEADERS += bus.h bussimulator.h busstop.h mainwindow.h \
-    waittimewidget.h \
-    busstoplistpanel.h
+    mainwindowclient.h \
+    waittimewidget.h
 SOURCES += bus.cpp \
            bussimulator.cpp \
            busstop.cpp \
            main.cpp \
            mainwindow.cpp \
-    waittimewidget.cpp \
-    busstoplistpanel.cpp
+    mainwindowclient.cpp \
+    waittimewidget.cpp
