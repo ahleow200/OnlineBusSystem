@@ -6,10 +6,12 @@ BusStop::BusStop()
 {
 }
 
-void BusStop::initialize(const QString &name)
+void BusStop::initialize(const QString &name, int x, int y)
 {
     this->name=name;
     crowdedness=0;
+	location.append(x);
+	location.append(y);
 }
 
 QString BusStop::getName(){
@@ -37,4 +39,8 @@ void BusStop::addService(const QString &route){
 QVector<QString> BusStop::getService()
 {
     return service;
+}
+
+QVector<int> BusStop::getLocation(){
+	return location;
 }
