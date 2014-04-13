@@ -8,9 +8,11 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
-HEADERS += bus.h bussimulator.h busstop.h mainwindow.h
+HEADERS += bus.h bussimulator.h busstop.h mainwindow.h \
+    mainwindowclient.h
 SOURCES += bus.cpp \
            bussimulator.cpp \
            busstop.cpp \
            main.cpp \
-           mainwindow.cpp
+           mainwindow.cpp \
+    mainwindowclient.cpp

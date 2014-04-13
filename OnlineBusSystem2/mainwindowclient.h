@@ -1,23 +1,22 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef MAINWINDOWCLIENT_H
+#define MAINWINDOWCLIENT_H
 
 #include "bussimulator.h"
+#include "mainwindow.h"
 #include <QtGui>
 
 class Bus;
 class BusStop;
 class BusSimulator;
 
-class MainWindow : public QMainWindow
+class MainWindowClient : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    MainWindowClient(QWidget *parent = 0);
+    ~MainWindowClient();
     void initialize(BusSimulator **bs);
-    bool updateAllowed();
-    void toggleUpdate();
 
 private:
     void createTitleBar();
@@ -70,7 +69,6 @@ private:
 
     int myTimerId;
     BusSimulator **bs;
-    int timerCount;
 
     protected:
         void timerEvent(QTimerEvent *event);
@@ -78,5 +76,4 @@ private:
         void hideEvent(QHideEvent *event);
 
 };
-
-#endif // MAINWINDOW_H
+#endif // MAINWINDOWCLIENT_H

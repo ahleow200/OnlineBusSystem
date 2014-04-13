@@ -3,6 +3,7 @@
 #include "bus.h"
 #include "busstop.h"
 #include <QtGui>
+#include <QTime>
 
 class Bus;
 class BusStop;
@@ -36,6 +37,7 @@ public:
     int* getBusPosition(const QString &route);
     void addCrowd();
     void boardPassenger(const QString &route, int index);
+    void delay(int millisecond);
 
 private:
     //variables

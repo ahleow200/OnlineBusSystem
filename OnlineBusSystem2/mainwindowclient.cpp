@@ -1,4 +1,5 @@
-#include "mainwindow.h"
+#include "mainwindowclient.h"
+
 #include "bussimulator.h"
 #include "busstop.h"
 #include <QtDebug>
@@ -8,7 +9,7 @@
 class BusSimulator;
 class BusStop;
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindowClient::MainWindowClient(QWidget *parent)
     : QMainWindow(parent)
 {
     mainWindowLayout = new QGridLayout();
@@ -23,46 +24,32 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(window);
 }
 
-MainWindow::~MainWindow()
+MainWindowClient::~MainWindowClient()
 {
 
 }
 
-void MainWindow::initialize(BusSimulator **bs)
+void MainWindowClient::initialize(BusSimulator **bs)
 {
     myTimerId=0;
-    timerCount=0;
     this->bs=bs;
 }
 
 //event overwrite
-void MainWindow::showEvent(QShowEvent *event)
+void MainWindowClient::showEvent(QShowEvent *event)
 {
     myTimerId=startTimer(3000);
 }
 
-void MainWindow::hideEvent(QHideEvent *event)
+void MainWindowClient::hideEvent(QHideEvent *event)
 {
     killTimer(myTimerId);
 }
 
-void MainWindow::timerEvent(QTimerEvent *event)
+void MainWindowClient::timerEvent(QTimerEvent *event)
 {
     if (event->timerId() == myTimerId)
     {
-        //simulate bus system
-        //dispatch buses
-        if(timerCount>=6)
-        {
-            (*bs)->dispatchBus("A1");
-            (*bs)->dispatchBus("A2");
-            (*bs)->dispatchBus("B");
-            (*bs)->dispatchBus("C");
-            (*bs)->dispatchBus("D1");
-            (*bs)->dispatchBus("D2");
-            timerCount=0;
-        }
-
         //get bus location
         int *a1position=(*bs)->getBusPosition("A1");
         int *a2position=(*bs)->getBusPosition("A2");
@@ -72,7 +59,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
         int *d2position=(*bs)->getBusPosition("D2");
 
         //print all bus location
-        qDebug()<<"A1=================================================";
+        qDebug()<<"A1====Client============================================";
         qDebug()<<"0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15";
         QString a1map;
         for(int i=0;i<A1BusStopCount;i++)
@@ -100,7 +87,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
         }
 
         //print all bus location
-        qDebug()<<"A2=================================================";
+        qDebug()<<"A2===Client=============================================";
         qDebug()<<"0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16";
         QString a2map;
         for(int i=0;i<A2BusStopCount;i++)
@@ -126,10 +113,6 @@ void MainWindow::timerEvent(QTimerEvent *event)
             else
                 qDebug()<<service[i]<<" occupancy:"<<occupancy[i]<<"/"<<occupancyLimit[i]<<" next bus:"<<time[i]<<" "<<nextTime[i];
         }
-
-        //(*bs)->advanceAllBus();
-        //(*bs)->addCrowd();
-        timerCount++;
     }
     else
         QWidget::timerEvent(event); // propagate
@@ -137,7 +120,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
 }
 
 //GUI
-void MainWindow::createTitleBar()
+void MainWindowClient::createTitleBar()
 {
     titleLayout = new QHBoxLayout();
 
@@ -156,7 +139,7 @@ void MainWindow::createTitleBar()
 
 }
 
-void MainWindow::createBusStopList()
+void MainWindowClient::createBusStopList()
 {
     busStopSearchColumn = new QHBoxLayout();
     busStopObject = new QHBoxLayout();
@@ -207,7 +190,7 @@ void MainWindow::createBusStopList()
 */
 }
 
-void MainWindow::createBusTimePanel()
+void MainWindowClient::createBusTimePanel()
 {
     QLabel *nextBusTime;
     QLabel *nextTwoBusTime;
@@ -254,7 +237,7 @@ void MainWindow::createBusTimePanel()
     mainWindowLayout->addLayout(timePanel,1,0);
 }
 
-void MainWindow::createMapPanel()
+void MainWindowClient::createMapPanel()
 {
     QVBoxLayout *mapPanel = new QVBoxLayout();
     QStringList buses;
@@ -274,3 +257,4 @@ void MainWindow::createMapPanel()
 
     mainWindowLayout->addLayout(mapPanel,0,1);
 }
+
