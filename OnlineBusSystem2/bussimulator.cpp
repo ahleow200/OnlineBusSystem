@@ -41,42 +41,42 @@ void BusSimulator::initialize()
     currentD2=-1;
 
     //initialize bus stop
-    busstop[0].initialize("PGP Terminal");
-    busstop[1].initialize("After Science Park Drive");
-    busstop[2].initialize("KR MRT Station");
-    busstop[3].initialize("NUH");
-    busstop[4].initialize("LT29");
-    busstop[5].initialize("University Hall");
-    busstop[6].initialize("Opp University Health Centre");
-    busstop[7].initialize("Yushof Ishak House");
-    busstop[8].initialize("Central Library");
-    busstop[9].initialize("LT13");
-    busstop[10].initialize("AS7");
-    busstop[11].initialize("COM2");
-    busstop[12].initialize("BIZ2");
-    busstop[13].initialize("Opp House 12");
-    busstop[14].initialize("House 7");
-    busstop[15].initialize("Between House 14 & 15");
-    busstop[16].initialize("House 12");
-    busstop[17].initialize("Opp Hon Sui Sen Memorial Library");
-    busstop[18].initialize("Temasek Hall");
-    busstop[19].initialize("Eusoff Hall");
-    busstop[20].initialize("Ventus");
-    busstop[21].initialize("Computer Centre");
-    busstop[22].initialize("Opp Yushof Ishak House");
-    busstop[23].initialize("Museum");
-    busstop[24].initialize("University Health Centre");
-    busstop[25].initialize("Opp University Hall");
-    busstop[26].initialize("Block S17");
-    busstop[27].initialize("Opp NUH");
-    busstop[28].initialize("Opp KR MRT Station");
-    busstop[29].initialize("The Japanese Primary School");
-    busstop[30].initialize("Block E3A");
-    busstop[31].initialize("Raffles Hall");
-    busstop[32].initialize("Opp Block EA");
-    busstop[33].initialize("University Town");
-    busstop[34].initialize("Kent Ridge Crescent");
-
+    busstop[0].initialize("PGP Terminal",493,413);
+    busstop[1].initialize("After Science Park Drive",673,334);
+    busstop[2].initialize("KR MRT Station",645,252);
+    busstop[3].initialize("NUH",576,202);
+    busstop[4].initialize("LT29",429,194);
+    busstop[5].initialize("University Hall",337,237);
+    busstop[6].initialize("Opp University Health Centre",188,222);
+    busstop[7].initialize("Yushof Ishak House",136,230);
+    busstop[8].initialize("Central Library",98,346);
+    busstop[9].initialize("LT13",47,457);
+    busstop[10].initialize("AS7",117,488);
+    busstop[11].initialize("COM2",185,435);
+    busstop[12].initialize("BIZ2",258,444);
+    busstop[13].initialize("Opp House 12",342,394);
+    busstop[14].initialize("House 7",373,409);
+    busstop[15].initialize("Between House 14 & 15",385,426);
+    busstop[16].initialize("House 12",347,420);
+    busstop[17].initialize("Opp Hon Sui Sen Memorial Library",275,459);
+    busstop[18].initialize("Temasek Hall",134,521);
+    busstop[19].initialize("Eusoff Hall",62,505);
+    busstop[20].initialize("Ventus",31,436);
+    busstop[21].initialize("Computer Centre",94,307);
+    busstop[22].initialize("Opp Yushof Ishak House",113,227);
+    busstop[23].initialize("Museum",43,139);
+    busstop[24].initialize("University Health Centre",211,199);
+    busstop[25].initialize("Opp University Hall",291,224);
+    busstop[26].initialize("Block S17",441,178);
+    busstop[27].initialize("Opp NUH",539,175);
+    busstop[28].initialize("Opp KR MRT Station",654,243);
+    busstop[29].initialize("The Japanese Primary School",0,0);
+    busstop[30].initialize("Block E3A",0,0);
+    busstop[31].initialize("Raffles Hall",0,0);
+    busstop[32].initialize("Opp Block EA",0,0);
+    busstop[33].initialize("University Town",121,17);
+    busstop[34].initialize("Kent Ridge Crescent",0,0);
+	
     //initialize A1 Route
     for(int i=0;i<A1BusStopCount-1;i++)
     {
@@ -311,22 +311,6 @@ QVector<QString> BusSimulator::getService(const QString &busstopname)
     //qDebug()<<"service count: "<<service.count();
     return service;
 }
-
-/*QString* BusSimulator::getRoute(const QString &route)
-{
-    if(route=="A1")
-        return A1BusStop;
-    else if(route=="A2")
-        return A2BusStop;
-    else if(route=="B")
-        return BBusStop;
-    else if(route=="C")
-        return CBusStop;
-    else if(route=="D1")
-        return D1BusStop;
-    else
-        return D2BusStop;
-}*/
 
 BusStop** BusSimulator::getRoute(const QString &route)
 {

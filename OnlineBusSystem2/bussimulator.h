@@ -3,7 +3,6 @@
 #include "bus.h"
 #include "busstop.h"
 #include <QtGui>
-#include <QTime>
 
 class Bus;
 class BusStop;
@@ -23,7 +22,7 @@ public:
     BusSimulator();
     void initialize();
     int getCrowdedness(const QString &busstopname);
-    BusStop** getRoute(const QString &route);
+    BusStop* getRoute(const QString &route);
     QVector<QString> getService(const QString &busstopname);
     //BusStop getBusStop(const QString &route, int order);
     QVector<int> getTiming(const QString &busstopname, bool nextBus);
@@ -37,20 +36,20 @@ public:
     int* getBusPosition(const QString &route);
     void addCrowd();
     void boardPassenger(const QString &route, int index);
-    void delay(int millisecond);
 
 private:
     //variables
 
     Bus bus[BusCount]; //total number of bus to be simulated
     BusStop busstop[BusStopCount]; //total number of bus stop to be simulated
+	BusStop *AllRoute[BusStopCount];
     BusStop *A1Route[A1BusStopCount];
     BusStop *A2Route[A2BusStopCount];
     BusStop *BRoute[BBusStopCount];
     BusStop *CRoute[CBusStopCount];
     BusStop *D1Route[D1BusStopCount];
     BusStop *D2Route[D2BusStopCount];
-
+	
     QString A1BusStop[A1BusStopCount];
     QString A2BusStop[A2BusStopCount];
     QString BBusStop[BBusStopCount];
