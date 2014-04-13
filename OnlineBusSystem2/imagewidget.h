@@ -15,24 +15,25 @@ class ImageWidget: public QWidget
 
 public:
     ImageWidget(QWidget *parent = 0);
-	void setImage(const QString &route);
-	void addButton(BusStop **busstops);
+    //void setImage(const QString &route);
+    void addButton(int num, BusStop **busstops);
 	
 signals:
-	void check(const QString &str);
+    void check(const QString &str);
 	
 public slots:
     void displayRoute(const QString &route, BusStop **busstops);
-	void test(const QString &route);
+    void test(const QString &route);
+    void checkTime();
 
 protected:
     void paintEvent(QPaintEvent *event);
-	void mousePressEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 
 private:
-	QImage image;
+    QImage image;
     QPixmap input;
-	QString stopName;
+    QString stopName;
 	//QGridLayout *LayerLayout;
 	//QWidget *layer;
 };
