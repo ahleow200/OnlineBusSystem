@@ -20,9 +20,9 @@ public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
     
-    void initialize(BusSimulator **bs);
-    bool updateAllowed();
-    void toggleUpdate();
+    //void initialize(BusSimulator **bs);
+    //bool updateAllowed();
+    //void toggleUpdate();
 
 
 signals:
@@ -53,36 +53,8 @@ private:
     //bus stop list panel
     BusStopListPanel *busStopListPanel;
 
-    QLineEdit *searchBar;
-    QPushButton *searchButton;
-    QVBoxLayout *busStopListLayout;
-    QListWidget *busStopList;
-    QHBoxLayout *busStopSearchColumn;
-    QHBoxLayout *busStopObject;
-    QScrollArea *busStopListScroll;
-    QLabel *busStopLabel;
-    QLabel *busIcon;
-
     //time panel
     WaitTimeWidget *waitTimeWidget;
-
-    QHBoxLayout *timePanel;
-    QVBoxLayout *leftPanel;
-    QVBoxLayout *estimateTime;
-
-    QHBoxLayout *occupancyBox;
-    QHBoxLayout *timeObject;
-    QHBoxLayout *timeObject2;
-
-    QLabel *busName;
-    QLabel *occupancyLabel;
-    QLabel *vacancyLabel;
-    QLabel *slashLabel;
-    QLabel *busSeatLabel;
-
-    QLabel *nextBusTime;
-    QLabel *nextTwoBusTime;
-    QLabel *minLabel;
 
     //map panel
     QComboBox *busList;
@@ -91,10 +63,10 @@ private:
 
 
     int myTimerId;
-    BusSimulator **bs;
+    BusSimulator *bs;
     int timerCount;
-	QString routeSelected;
-	bool isChecked;
+    QString routeSelected;
+    bool isChecked;
 
 protected:
     void timerEvent(QTimerEvent *event);

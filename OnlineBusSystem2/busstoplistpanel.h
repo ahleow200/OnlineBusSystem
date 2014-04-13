@@ -3,24 +3,29 @@
 
 #include <QtGui>
 #include <QWidget>
+#include <busstop.h>
 
 class BusStopListPanel : public QWidget
 {
     Q_OBJECT
+
 public:
     explicit BusStopListPanel(QWidget *parent = 0);
+    void addBusStops(int num, BusStop **busstops);
 
-signals:
-
-public slots:
+private slots:
+    //void viewBusRoute(const QStringList &busStops);
+    void showRouteList(const QString &route, BusStop**busstops);
 
 private:
+    QVBoxLayout *busStopListLayout;
     QLineEdit *searchBar;
     QPushButton *searchButton;
     QListWidget *busStopList;
     QScrollArea *busStopListScroll;
     QLabel *busStopLabel;
     QLabel *busIcon;
+    QStringList *busRoute;
 
 };
 

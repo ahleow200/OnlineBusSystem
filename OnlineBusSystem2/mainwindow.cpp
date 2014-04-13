@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     myTimerId=0;
     timerCount=0;
 
-    (*bs)=new BusSimulator();
+    bs=new BusSimulator();
     routeSelected = "A1";
     isChecked = false;
     emit routeGet(routeSelected, getRoute(routeSelected));	
@@ -57,23 +57,23 @@ void MainWindow::timerEvent(QTimerEvent *event)
         //dispatch buses
         if(timerCount>=6)
         {
-            (*bs)->dispatchBus("A1");
-            (*bs)->dispatchBus("A2");
-            (*bs)->dispatchBus("B");
-            (*bs)->dispatchBus("C");
-            (*bs)->dispatchBus("D1");
-            (*bs)->dispatchBus("D2");
+            bs->dispatchBus("A1");
+            bs->dispatchBus("A2");
+            bs->dispatchBus("B");
+            bs->dispatchBus("C");
+            bs->dispatchBus("D1");
+            bs->dispatchBus("D2");
 
             timerCount=0;
         }
 
         //get bus location
-        int *a1position=(*bs)->getBusPosition("A1");
-        int *a2position=(*bs)->getBusPosition("A2");
-        int *bposition=(*bs)->getBusPosition("B");
-        int *cposition=(*bs)->getBusPosition("C");
-        int *d1position=(*bs)->getBusPosition("D1");
-        int *d2position=(*bs)->getBusPosition("D2");
+        int *a1position=bs->getBusPosition("A1");
+        int *a2position=bs->getBusPosition("A2");
+        int *bposition=bs->getBusPosition("B");
+        int *cposition=bs->getBusPosition("C");
+        int *d1position=bs->getBusPosition("D1");
+        int *d2position=bs->getBusPosition("D2");
 
 
         //print all bus location
@@ -90,12 +90,12 @@ void MainWindow::timerEvent(QTimerEvent *event)
                 //qDebug("[] ");
         }
         qDebug()<<a1map;
-        QVector<int> time=(*bs)->getTiming("House 7", false);
-        QVector<int> nextTime= (*bs)->getTiming("House 7",true);
-        QVector<int> occupancy= (*bs)->getOccupancy("House 7");
-        QVector<int> occupancyLimit=(*bs)->getOccupancyLimit("House 7");
-        QVector<QString> service=(*bs)->getService("House 7");
-        qDebug()<<"House 7 crowdedness: "<<(*bs)->getCrowdedness("House 7");
+        QVector<int> time=bs->getTiming("House 7", false);
+        QVector<int> nextTime= bs->getTiming("House 7",true);
+        QVector<int> occupancy= bs->getOccupancy("House 7");
+        QVector<int> occupancyLimit=bs->getOccupancyLimit("House 7");
+        QVector<QString> service=bs->getService("House 7");
+        qDebug()<<"House 7 crowdedness: "<<bs->getCrowdedness("House 7");
 
         for(int i=0;i<service.count();i++)
         {
@@ -119,12 +119,12 @@ void MainWindow::timerEvent(QTimerEvent *event)
                 //qDebug("[] ");
         }
         qDebug()<<a2map;
-        time=(*bs)->getTiming("Opp KR MRT Station", false);
-        nextTime= (*bs)->getTiming("Opp KR MRT Station",true);
-        occupancy= (*bs)->getOccupancy("Opp KR MRT Station");
-        occupancyLimit=(*bs)->getOccupancyLimit("Opp KR MRT Station");
-        service=(*bs)->getService("Opp KR MRT Station");
-        qDebug()<<"Opp KR MRT Station crowdedness: "<<(*bs)->getCrowdedness("Opp KR MRT Station");
+        time=bs->getTiming("Opp KR MRT Station", false);
+        nextTime= bs->getTiming("Opp KR MRT Station",true);
+        occupancy= bs->getOccupancy("Opp KR MRT Station");
+        occupancyLimit=bs->getOccupancyLimit("Opp KR MRT Station");
+        service=bs->getService("Opp KR MRT Station");
+        qDebug()<<"Opp KR MRT Station crowdedness: "<<bs->getCrowdedness("Opp KR MRT Station");
 
         for(int i=0;i<service.count();i++)
         {
@@ -134,8 +134,8 @@ void MainWindow::timerEvent(QTimerEvent *event)
                 qDebug()<<service[i]<<" occupancy:"<<occupancy[i]<<"/"<<occupancyLimit[i]<<" next bus:"<<time[i]<<" "<<nextTime[i];
         }
 
-        //(*bs)->advanceAllBus();
-        //(*bs)->addCrowd();
+        //bs->advanceAllBus();
+        //bs->addCrowd();
 
         timerCount++;
     }
@@ -149,6 +149,8 @@ void MainWindow::createAction(){
 		this, SLOT(selectRoute(const QString &)));
 	
 	connect(this, SIGNAL(routeGet(const QString &, BusStop**)),imageWidget, SLOT(displayRoute(const QString &, BusStop**)));
+
+    connect(this, SIGNAL(routeGet(const QString &, BusStop**)),busStopListPanel, SLOT(showRouteList(const QString &, BusStop**)));
 }
 //GUI
 void MainWindow::createTitleBar()
@@ -220,7 +222,7 @@ void MainWindow::selectRoute(const QString &route){
 //methods
 BusStop** MainWindow::getRoute(const QString &route){
 	//qDebug ("Checking route.....");
-    BusStop** result = (*bs)->getRoute(route);
+    BusStop** result = bs->getRoute(route);
 	//qDebug()<< result[0]->getName();
 	//qDebug()<< result[1]->getName();
 	//qDebug()<< result[2]->getName();
@@ -229,7 +231,7 @@ BusStop** MainWindow::getRoute(const QString &route){
 }
 
 void MainWindow::getLocation(const QString &route){
-    int *result = (*bs)->getBusPosition(route);
+    int *result = bs->getBusPosition(route);
 	int index;
 	/*for (int i=0;i<length(result);i++){
 		return;
