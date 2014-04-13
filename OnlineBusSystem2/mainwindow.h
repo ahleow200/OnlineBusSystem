@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include "bussimulator.h"
+#include "waittimewidget.h"
 #include <QtGui>
 
 class Bus;
@@ -42,6 +43,8 @@ private:
     QLabel *busIcon;
 
     //time panel
+    WaitTimeWidget *waitTimeWidget;
+
     QHBoxLayout *timePanel;
     QVBoxLayout *leftPanel;
     QVBoxLayout *estimateTime;
