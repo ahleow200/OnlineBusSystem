@@ -7,12 +7,13 @@ class BusStop
 {
 public:
     BusStop();
-    void initialize(const QString &name);
+    void initialize(const QString &name, int x, int y);
 
     //getter methods
     QString getName();
     int getCrowdedness();
     QVector<QString> getService();
+	QVector<int> getLocation();
 
     //setter methods
     void addToCrowd(int people);
@@ -24,6 +25,7 @@ private:
     QString name;
     int crowdedness;
     QVector<QString> service;
+	QVector<int> location;
 };
 
 #endif // BUSSTOP_H

@@ -3,6 +3,7 @@
 
 #include "bussimulator.h"
 #include "waittimewidget.h"
+#include "busstoplistpanel.h"
 #include <QtGui>
 
 class Bus;
@@ -32,36 +33,10 @@ private:
     QHBoxLayout *titleLayout;
 
     //bus stop list panel
-    QLineEdit *searchBar;
-    QPushButton *searchButton;
-    QVBoxLayout *busStopListLayout;
-    QListWidget *busStopList;
-    QHBoxLayout *busStopSearchColumn;
-    QHBoxLayout *busStopObject;
-    QScrollArea *busStopListScroll;
-    QLabel *busStopLabel;
-    QLabel *busIcon;
+    BusStopListPanel *busStopListPanel;
 
     //time panel
     WaitTimeWidget *waitTimeWidget;
-
-    QHBoxLayout *timePanel;
-    QVBoxLayout *leftPanel;
-    QVBoxLayout *estimateTime;
-
-    QHBoxLayout *occupancyBox;
-    QHBoxLayout *timeObject;
-    QHBoxLayout *timeObject2;
-
-    QLabel *busName;
-    QLabel *occupancyLabel;
-    QLabel *vacancyLabel;
-    QLabel *slashLabel;
-    QLabel *busSeatLabel;
-
-    QLabel *nextBusTime;
-    QLabel *nextTwoBusTime;
-    QLabel *minLabel;
 
     //map panel
     QComboBox *busList;

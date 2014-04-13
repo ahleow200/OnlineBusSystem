@@ -128,6 +128,7 @@ void MainWindow::timerEvent(QTimerEvent *event)
         bs->advanceAllBus();
         bs->addCrowd();
         timerCount++;
+
     }
     else
         QWidget::timerEvent(event); // propagate
@@ -156,53 +157,8 @@ void MainWindow::createTitleBar()
 
 void MainWindow::createBusStopList()
 {
-    busStopSearchColumn = new QHBoxLayout();
-    busStopObject = new QHBoxLayout();
-    busStopListLayout = new QVBoxLayout();
-    busStopList = new QListWidget();
-
-    searchBar = new QLineEdit();
-    searchButton = new QPushButton("Search");
-    busStopLabel = new QLabel("Science"); //test
-    busIcon = new QLabel("bus"); //test
-
-    busStopSearchColumn->addWidget(searchBar);
-    busStopSearchColumn->addWidget(searchButton);
-
-    busStopObject->addWidget(busStopLabel);
-    busStopObject->addWidget(busIcon);
-
-    //busStopListScroll->addWidget(busStopObject);
-    /*
-    busStopList->addLayout(busStopObject);
-    busStopList->addLayout(busStopObject);
-    busStopList->addLayout(busStopObject);
-    busStopList->addLayout(busStopObject);
-    busStopList->addLayout(busStopObject);
-    */
-
-    busStopList->addItem(new QListWidgetItem("Science"));
-    busStopList->addItem(new QListWidgetItem("Science"));
-    busStopList->addItem(new QListWidgetItem("Science"));
-    busStopList->addItem(new QListWidgetItem("Science"));
-    busStopList->addItem(new QListWidgetItem("Science"));
-
-    busStopList->setItemWidget(new QListWidgetItem("Science"),busIcon);
-
-    busStopList->setFixedHeight(400);
-    //busStopList->setLayout(busStopObject);
-
-    busStopListLayout->addLayout(busStopSearchColumn);
-    busStopListLayout->addWidget(busStopList);
-
-    mainWindowLayout->addLayout(busStopListLayout,0,0);
-
-/*
-    QWidget *window = new QWidget();
-    window->setLayout(busStopListLayout);
-
-    setCentralWidget(window);
-*/
+    busStopListPanel = new BusStopListPanel();
+    mainWindowLayout->addWidget(busStopListPanel,0,0);
 }
 
 void MainWindow::createBusTimePanel()
