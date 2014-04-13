@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include "bussimulator.h"
+#include "waittimewidget.h"
+#include "busstoplistpanel.h"
+
 #include <QtGui>
 
 class Bus;
@@ -16,6 +19,11 @@ class MainWindow : public QMainWindow
 public:
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    
+    void initialize(BusSimulator **bs);
+    bool updateAllowed();
+    void toggleUpdate();
+
 
 signals:
 	void routeGet(const QString &str, BusStop** result);
@@ -41,6 +49,8 @@ private:
     QHBoxLayout *titleLayout;
 
     //bus stop list panel
+    BusStopListPanel *busStopListPanel;
+
     QLineEdit *searchBar;
     QPushButton *searchButton;
     QVBoxLayout *busStopListLayout;
@@ -52,6 +62,8 @@ private:
     QLabel *busIcon;
 
     //time panel
+    WaitTimeWidget *waitTimeWidget;
+
     QHBoxLayout *timePanel;
     QVBoxLayout *leftPanel;
     QVBoxLayout *estimateTime;
@@ -77,7 +89,7 @@ private:
 
 
     int myTimerId;
-    BusSimulator *bs;
+    BusSimulator **bs;
     int timerCount;
 	QString routeSelected;
 	bool isChecked;
