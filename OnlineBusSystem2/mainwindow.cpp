@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent)
     myTimerId=0;
     timerCount=0;
 
-    bs=new BusSimulator();
+    (*bs)=new BusSimulator();
     routeSelected = "A1";
     isChecked = false;
     emit routeGet(routeSelected, getRoute(routeSelected));	
@@ -220,7 +220,7 @@ void MainWindow::selectRoute(const QString &route){
 //methods
 BusStop** MainWindow::getRoute(const QString &route){
 	//qDebug ("Checking route.....");
-	BusStop** result = bs->getRoute(route);
+    BusStop** result = (*bs)->getRoute(route);
 	//qDebug()<< result[0]->getName();
 	//qDebug()<< result[1]->getName();
 	//qDebug()<< result[2]->getName();
@@ -229,7 +229,7 @@ BusStop** MainWindow::getRoute(const QString &route){
 }
 
 void MainWindow::getLocation(const QString &route){
-	int *result = bs->getBusPosition(route);
+    int *result = (*bs)->getBusPosition(route);
 	int index;
 	/*for (int i=0;i<length(result);i++){
 		return;

@@ -37,6 +37,8 @@ private:
     void createBusTimePanel();
     void createMapPanel();
     void createAction();
+    int getCount(const QString &route);
+
     BusStop** getRoute(const QString &str);
     void getLocation(const QString &str);
 
