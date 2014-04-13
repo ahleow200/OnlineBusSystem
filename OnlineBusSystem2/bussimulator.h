@@ -22,7 +22,7 @@ public:
     BusSimulator();
     void initialize();
     int getCrowdedness(const QString &busstopname);
-    BusStop* getRoute(const QString &route);
+    BusStop** getRoute(const QString &route);
     QVector<QString> getService(const QString &busstopname);
     //BusStop getBusStop(const QString &route, int order);
     QVector<int> getTiming(const QString &busstopname, bool nextBus);
@@ -36,6 +36,7 @@ public:
     int* getBusPosition(const QString &route);
     void addCrowd();
     void boardPassenger(const QString &route, int index);
+    void delay(int millisecondsToWait);
 
 private:
     //variables
