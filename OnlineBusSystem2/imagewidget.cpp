@@ -9,62 +9,32 @@ ImageWidget::ImageWidget(QWidget *parent): QWidget(parent)
     image = QImage("./a1.png"); // Get image
     input = QPixmap::fromImage(image);
     update();
-	
-	//layer = new QWidget(this);
-	//layer->move(0,0);
-	//layer->resize(700,550);
-	//QPushButton *btn;
-	
-	/*for (int i=0;i<5;i++){
-		btn = new QPushButton("press",this);	
-		btn->move(10*(i+1),200);
-		btn->show();
-	}*/
-
-	
-	/*QPushButton *btn = new QPushButton(tr("Bus stop"),this);
-	btn->move(200,200);
-	btn->show();*/
-	
-	
-	/*for (int i=0;i<busstop.size();i++){
-		//get location
-		QVector<int> location = busstop[i].getLocation();
-		QString name = busstop[i].getName();
-		int x = location[0];
-		int y = location[1];
-		QPushButton *btn;
-		if (x > 0 && y > 0){
-			btn = new QPushButton(tr("Bus stop"),this);
-			btn->move(x,y);
-			bth.show();
-		}
-	}*/	
 }
 
-void ImageWidget::test(const QString &route)
-{	
-	//delete layer;
-	QList<QWidget *> widgets = findChildren<QWidget *>();
-	foreach(QWidget * widget, widgets)
-	{
-		delete widget;
-	}
-	//setImage(route);
-	//layer = new QWidget(this);
-	//layer->move(0,0);
-	//layer->resize(700,550);
-	QPushButton *btn = new QPushButton(this);
-	btn->move(200,200);
-	btn->show();
-	connect(btn, SIGNAL(clicked()), 
-		btn, SLOT(hide()));	
-}
+/*void ImageWidget::test(const QString &route)
+{
+    //delete layer;
+    QList<QWidget *> widgets = findChildren<QWidget *>();
+    foreach(QWidget * widget, widgets)
+    {
+        delete widget;
+    }
+    //setImage(route);
+    //layer = new QWidget(this);
+    //layer->move(0,0);
+    //layer->resize(700,550);
+    QPushButton *btn = new QPushButton(this);
+    btn->move(200,200);
+    btn->show();
+    connect(btn, SIGNAL(clicked()),
+        btn, SLOT(hide()));
+}*/
+
 //slot
 void ImageWidget::displayRoute(const QString &route, BusStop**busstops)
 {
 	//delete all widget
-	qDebug ("Clear widgets!");
+    //qDebug ("Clear widgets!");
 	QList<QWidget *> widgets = findChildren<QWidget *>();
 	foreach(QWidget * widget, widgets)
 	{
@@ -116,6 +86,35 @@ void ImageWidget::displayRoute(const QString &route, BusStop**busstops)
 
 void ImageWidget::checkTime(){
 	emit check(stopName);
+}
+
+void ImageWidget::displayBus(QVector<QVector<int> > locationList){
+    QPushButton *btn;
+    for (int i=0;i<locationList.count();i++){
+        QVector<int> item = locationList.at(i);
+        int x = item[0];
+        int y = item[1];
+        btn = new QPushButton(this);
+        QPixmap pixmap("./bus_red.png");
+        btn->move(x,y);
+        btn->setIcon(QIcon(pixmap));
+        btn->setIconSize(pixmap.rect().size());
+        btn->show();
+        //qDebug("Bus created!");
+    }
+}
+
+void ImageWidget::remove(const QString &route, BusStop** stops){
+    QList<QWidget *> widgets = findChildren<QWidget *>();
+    foreach(QWidget * widget, widgets)
+    {
+        delete widget;
+    }
+    int num = getCount(route);
+    addButton(num,stops);
+    //qDebug("Bus removed, Bus stops added!");
+
+
 }
 
 
@@ -181,9 +180,23 @@ void ImageWidget::paintEvent(QPaintEvent *event){
 }
 
 void ImageWidget::mousePressEvent(QMouseEvent *event)
- {
+{
      if (event->button() == Qt::LeftButton) {
          qDebug ("x is %d, y is %d",event->x(),event->y());
      }
- }
+}
+
+int ImageWidget::getCount(const QString &route){
+    int count;
+    if (route == "A1")
+        count = 16;
+    else if (route == "A2")
+        count = 17;
+    else if (route == "D1")
+        count = 14;
+    else
+        count = 12;
+    //qDebug("No of bus stops %d", count);
+    return count;
+}
 

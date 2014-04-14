@@ -9,6 +9,24 @@ WaitTimeWidget::WaitTimeWidget(QWidget *parent) :
 
     QHBoxLayout *occupancyBox = new QHBoxLayout();
 
+    QHBoxLayout *topRow = new QHBoxLayout();
+
+    busStopName = new QLabel("After Science park Drive");
+    refreshTimeButton = new QPushButton("Refresh");
+    topRow->addWidget(busStopName);
+    topRow->addWidget(refreshTimeButton);
+
+    QHBoxLayout *bottomRow = new QHBoxLayout();
+    crowdnessNumber = new QLabel("30");
+    QLabel *crowdnessLabel = new QLabel("Crowdness: ");
+    bottomRow->addWidget(crowdnessLabel);
+    bottomRow->addWidget(crowdnessNumber);
+
+    QVBoxLayout *busStopTimeInfoBox = new QVBoxLayout();
+    busStopTimeInfoBox->addLayout(topRow);
+    busStopTimeInfoBox->addLayout(bottomRow);
+
+
     nextBusTime = new QString("7 mins");
     nextTwoBusTime = new QString("20 mins");
     QLabel *nextBusLabel = new QLabel("7 mins");
@@ -34,5 +52,9 @@ WaitTimeWidget::WaitTimeWidget(QWidget *parent) :
     timePanel->addLayout(leftPanel);
     timePanel->addLayout(estimateTime);
 
-    setLayout(timePanel);
+    QVBoxLayout *waitingTimePanel = new QVBoxLayout();
+    waitingTimePanel->addLayout(busStopTimeInfoBox);
+    waitingTimePanel->addLayout(timePanel);
+
+    setLayout(waitingTimePanel);
 }

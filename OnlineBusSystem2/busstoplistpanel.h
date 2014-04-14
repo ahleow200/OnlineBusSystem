@@ -13,11 +13,15 @@ public:
     explicit BusStopListPanel(QWidget *parent = 0);
     void addBusStops(int num, BusStop **busstops);
 
-private slots:
-    //void viewBusRoute(const QStringList &busStops);
-    void showRouteList(const QString &route, BusStop**busstops);
+signals:
+    void forwardBusStop(const QString &busstopname);
 
-private:
+private slots:
+    void showRouteList(const QString &route, BusStop**busstops);
+    void isBusStopSelected(QListWidget &busStopList);
+    //void displayTime(timeGet(int, QVector<QString>, QVector<int>, QVector<int>, QVector<int>,QVector<int>));
+
+private:    
     QVBoxLayout *busStopListLayout;
     QLineEdit *searchBar;
     QPushButton *searchButton;

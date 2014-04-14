@@ -11,7 +11,8 @@ INCLUDEPATH += .
 HEADERS += bus.h bussimulator.h busstop.h mainwindow.h \
     waittimewidget.h \
     busstoplistpanel.h \
-    imagewidget.h
+    imagewidget.h \
+
 SOURCES += bus.cpp \
            bussimulator.cpp \
            busstop.cpp \
@@ -19,4 +20,6 @@ SOURCES += bus.cpp \
            mainwindow.cpp \
     waittimewidget.cpp \
     busstoplistpanel.cpp \
-    imagewidget.cpp
+    imagewidget.cpp \
+
+FORMS +=

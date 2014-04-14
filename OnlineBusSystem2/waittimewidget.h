@@ -13,6 +13,7 @@ public:
 signals:
 
 public slots:
+    //void showBusStopInfo(const QString &route, QVector &info);
 
 private:
     //time panel
@@ -28,6 +29,10 @@ private:
 
     const QString *nextBusTime;
     const QString *nextTwoBusTime;
+
+    QLabel *busStopName;
+    QPushButton *refreshTimeButton;
+    QLabel *crowdnessNumber;
 
 };
 

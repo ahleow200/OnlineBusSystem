@@ -144,14 +144,30 @@ void MainWindow::timerEvent(QTimerEvent *event)
 
 }
 
-void MainWindow::createAction(){
+void MainWindow::createAction()
+{
 	connect(busList, SIGNAL(activated(const QString &)), 
 		this, SLOT(selectRoute(const QString &)));
 	
 	connect(this, SIGNAL(routeGet(const QString &, BusStop**)),imageWidget, SLOT(displayRoute(const QString &, BusStop**)));
 
     connect(this, SIGNAL(routeGet(const QString &, BusStop**)),busStopListPanel, SLOT(showRouteList(const QString &, BusStop**)));
+
+    connect(busStopListPanel, SIGNAL(forwardBusStop(const QString &)),this, SLOT(getTime(const QString &)));
+
+    connect(this, SIGNAL(routeGet(const QString &, BusStop**)),busStopListPanel, SLOT(showRouteList(const QString &, BusStop**)));
+
+    connect(imageWidget, SIGNAL(check(const QString &)), this, SLOT(getTime(const QString &)));
+
+    connect(this, SIGNAL(timeGet(int, QVector<QString>, QVector<int>, QVector<int>, QVector<int>,QVector<int>)),waitTimeWidget, SLOT(displayTime(int, QVector<QString>, QVector<int>, QVector<int>, QVector<int>,QVector<int>)));
+
+    connect(checkLocation, SIGNAL(toggled(bool)), this, SLOT(check(bool)));
+
+    connect(this, SIGNAL(locationGet(QVector<QVector<int> >)), imageWidget, SLOT(displayBus(QVector<QVector<int> >)));
+
+    connect(this, SIGNAL(uncheck(const QString &, BusStop**)), imageWidget, SLOT(remove(const QString &, BusStop**)));
 }
+
 //GUI
 void MainWindow::createTitleBar()
 {
@@ -160,6 +176,7 @@ void MainWindow::createTitleBar()
     leftTitle = new QLabel("NUS");
     middleTitle = new QLabel("Online Bus System");
     loginButton = new QPushButton("Login");
+    loginButton->setFixedWidth(100);
 
     titleLayout->addWidget(leftTitle);
     titleLayout->addWidget(middleTitle);
@@ -187,6 +204,7 @@ void MainWindow::createBusTimePanel()
 void MainWindow::createMapPanel()
 {
     QVBoxLayout *mapPanel = new QVBoxLayout();
+    QHBoxLayout *hbox = new QHBoxLayout();
     QStringList buses;
     buses << "A1" << "A2" << "D1" << "D2";
 
@@ -194,14 +212,22 @@ void MainWindow::createMapPanel()
     busList->setFixedWidth(100);
     busList->addItems(buses);
 
+    checkLocation = new QCheckBox("Check Location");
+    dispatch = new QPushButton("Dispatch");
+    dispatch->setFixedWidth(100);
+
+    hbox->addWidget(busList);
+    hbox->addWidget(checkLocation);
+    hbox->addWidget(dispatch);
+
     //mapLabel = new QLabel("Map is here.");
     //mapLabel->setFixedHeight(300);
     //mapLabel->setFixedWidth(800);
-	imageWidget = new ImageWidget;
+    imageWidget = new ImageWidget();
 	imageWidget->setFixedHeight(600);
     imageWidget->setFixedWidth(900);
 
-    mapPanel->addWidget(busList);
+    mapPanel->addLayout(hbox);
     mapPanel->addWidget(imageWidget);
 
     mainWindowLayout->addLayout(mapPanel,0,1);
@@ -212,11 +238,36 @@ void MainWindow::selectRoute(const QString &route){
 	routeSelected = route;
 	if (isChecked){
 		getLocation(routeSelected);
-		qDebug("check location!");
+        //qDebug("check location!");
 	} else {
-		qDebug("get route information!");
+        //qDebug("get route information!");
 		emit routeGet(route, getRoute(routeSelected));		
 	}
+}
+
+void MainWindow::getTime(const QString &stopName){
+    int num = bs->getCrowdedness(stopName);
+    //qDebug("There are %d people waiting", num);
+    QVector<QString> service = bs->getService(stopName);
+    QVector<int> nextTime = bs->getTiming(stopName, false);
+    QVector<int> nextNxtTime = bs->getTiming(stopName, true);
+    QVector<int> occupancy = bs->getOccupancy(stopName);
+    QVector<int> limit = bs->getOccupancyLimit(stopName);
+    emit timeGet(num,service,nextTime,nextNxtTime,occupancy,limit);
+}
+
+void MainWindow::check(bool flag){
+    if (flag){
+        isChecked = true;
+        qDebug("Check activated!");
+        qDebug() << routeSelected;
+        getLocation(routeSelected);
+    } else {
+        isChecked = false;
+        qDebug("Check closed!");
+        emit uncheck(routeSelected,getRoute(routeSelected));
+    }
+
 }
 
 //methods
@@ -232,11 +283,19 @@ BusStop** MainWindow::getRoute(const QString &route){
 
 void MainWindow::getLocation(const QString &route){
     int *result = bs->getBusPosition(route);
-	int index;
-	/*for (int i=0;i<length(result);i++){
-		return;
-	}*/
-	return;
+    BusStop** stops = bs->getRoute(route);
+    //int index;
+    int count = getCount(route);
+    QVector<QVector<int> > locationList;
+    for (int i=0;i<count;i++){
+        if (result[i] != -1){
+            QVector<int> location = stops[i]->getLocation();
+            locationList.append(location);
+        }
+    }
+    //qDebug("Get location! Ready to print...");
+    emit locationGet(locationList);
+
 }
 
 int MainWindow::getCount(const QString &route){
@@ -249,4 +308,6 @@ int MainWindow::getCount(const QString &route){
 		count = 14;
 	else
 		count = 12;
+    return count;
 } 
+

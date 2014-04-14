@@ -1,4 +1,5 @@
 #include "busstoplistpanel.h"
+#include <QtDebug>
 
 BusStopListPanel::BusStopListPanel(QWidget *parent) :
     QWidget(parent)
@@ -21,21 +22,8 @@ BusStopListPanel::BusStopListPanel(QWidget *parent) :
     busStopSearchColumn->addWidget(searchBar);
     busStopSearchColumn->addWidget(searchButton);
 
-    //busStopObject->addWidget(busStopLabel);
-    //busStopObject->addWidget(busIcon);
-
-    //busStopListScroll->addWidget(busStopObject);
-    /*
-    busStopList->addItem(new QListWidgetItem("Science"));
-    busStopList->addItem(new QListWidgetItem("Science"));
-    busStopList->addItem(new QListWidgetItem("Science"));
-    busStopList->addItem(new QListWidgetItem("Science"));
-    busStopList->addItem(new QListWidgetItem("Science"));
-
-    busStopList->setItemWidget(item,busStopLabel);
-    */
-    //busStopList->addItems(busRoute);
     busStopList->setFixedHeight(300);
+    busStopList->setFixedWidth(200);
     busStopList->setLayout(busStopObject);
 
     busStopListLayout->addLayout(busStopSearchColumn);
@@ -44,15 +32,7 @@ BusStopListPanel::BusStopListPanel(QWidget *parent) :
     setLayout(busStopListLayout);
 
 }
-/*
-void BusStopListPanel::viewBusRoute(const QStringList &busStops)
-{
-    busStopList->addItems(busStops);
-    busStopListLayout->addWidget(busStopList);
 
-    setLayout(busStopListLayout);
-}
-*/
 void BusStopListPanel::showRouteList(const QString &route, BusStop**busstops)
 {
     //delete all widget
@@ -95,4 +75,11 @@ void BusStopListPanel::addBusStops(int num, BusStop **busstops)
     {
         busStopList->addItem(busstops[i]->getName());
     }
+    busStopList->setCurrentRow(0);
+    //qDebug() << busStopList->currentItem()->text();
+}
+
+void BusStopListPanel::isBusStopSelected(QListWidget &busStopList)
+{
+    emit forwardBusStop(busStopList.currentItem()->text());
 }

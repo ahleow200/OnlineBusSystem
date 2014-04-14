@@ -23,12 +23,16 @@ signals:
 	
 public slots:
     void displayRoute(const QString &route, BusStop **busstops);
-    void test(const QString &route);
+    //void test(const QString &route);
     void checkTime();
+    void displayBus(QVector<QVector<int> > locationList);
+    void remove(const QString &route,BusStop** stops);
 
 protected:
     void paintEvent(QPaintEvent *event);
     void mousePressEvent(QMouseEvent *event);
+    int getCount(const QString &route);
+
 
 private:
     QImage image;

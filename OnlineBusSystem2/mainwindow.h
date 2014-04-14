@@ -27,9 +27,14 @@ public:
 
 signals:
 	void routeGet(const QString &str, BusStop** result);
-	
+    void timeGet(int num, QVector<QString> service, QVector<int> nxtTime, QVector<int> nxtNxtTime, QVector<int> occupancy, QVector<int> limit);
+    void uncheck(const QString &str, BusStop** result);
+    void locationGet(QVector<QVector<int> > locationList);
+
 public slots:
 	void selectRoute(const QString &str);
+    void getTime(const QString &stopName);
+    void check(bool flag);
 
 private:
     void createTitleBar();
@@ -55,10 +60,12 @@ private:
 
     //time panel
     WaitTimeWidget *waitTimeWidget;
+    QCheckBox *checkLocation;
+    QPushButton *dispatch;
 
     //map panel
     QComboBox *busList;
-    QLabel *mapLabel;
+    //QLabel *mapLabel;
     ImageWidget *imageWidget;
 
 
